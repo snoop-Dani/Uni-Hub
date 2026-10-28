@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis notas · Uni-Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="apple-touch-icon" href="../icon.png">
+  <meta name="theme-color" content="#6B843A">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="notas.css?v=1">
+</head>
+<body>
+
+  <header class="banner">
+    <span class="app-title"><a class="volver" href="../">← Uni-Hub</a> · MIS NOTAS</span>
+    <div class="banner-main">
+      <div>
+        <h1>Mis notas</h1>
+        <p>Llevo la cuenta de mis evaluaciones y sé cuánto me falta para aprobar</p>
+      </div>
+      <label class="periodo">Cuatrimestre
+        <select id="periodo"></select>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <!-- Resumen: materias, promedio, aseguradas, en riesgo -->
+    <div class="stats" id="stats"></div>
+
+    <!-- Agregar materia: escribirla o tocar una sugerencia -->
+    <section class="panel">
+      <form class="agregar" id="agregar">
+        <input id="nueva" list="catalogo" placeholder="Escribo una materia…" autocomplete="off" aria-label="Materia">
+        <button class="btn verde" type="submit">＋ Agregar materia</button>
+      </form>
+      <div class="sugerencias" id="sugerencias"></div>
+    </section>
+
+    <!-- Tarjetas de materias -->
+    <section id="materias"></section>
+  </main>
+
+  <!-- Hoja para editar las evaluaciones de una materia (aparece encima) -->
+  <div class="hoja-fondo" id="hoja" hidden>
+    <div class="hoja" id="hoja-contenido"></div>
+  </div>
+  <datalist id="catalogo"></datalist>
+
+  <script src="../carrera/malla.js?v=4"></script>
+  <script src="notas.js?v=1"></script>
+</body>
+</html>

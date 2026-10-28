@@ -25,6 +25,14 @@ const MODULOS = [
       const r = leer("horarios-resumen");
       if (!r || !r.opciones) return r ? `Próximo: ${r.periodo} · aún sin opciones` : "Aún sin horarios";
       return `${r.periodo} · ${r.opciones} ${r.opciones === 1 ? "opción" : "opciones"} · ${r.elegida ? "★ " + r.elegida : "sin elegir"}`;
+    } },
+  { icono: "📊", titulo: "Mis notas", color: "moss", url: "notas/",
+    desc: "Llevo mis evaluaciones de cada materia y sé cuánto necesito en lo que falta para aprobar.",
+    datos: () => {
+      const r = leer("notas-resumen");
+      if (!r || !r.materias) return r ? `${r.periodo} · aún sin materias` : "Aún sin notas";
+      const prom = r.promedio === null ? "sin notas aún" : `promedio ${String(r.promedio).replace(".", ",")}`;
+      return `${r.periodo} · ${r.materias} ${r.materias === 1 ? "materia" : "materias"} · ${prom}${r.riesgo ? ` · ⚠ ${r.riesgo} en riesgo` : ""}`;
     } }
 ];
 

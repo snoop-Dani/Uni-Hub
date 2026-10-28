@@ -15,6 +15,7 @@ Sitio estático (HTML + CSS + JavaScript puro, sin frameworks ni build) para org
 - `roadmap/` → roadmap de pasantía: `index.html`, `styles.css`, `script.js` (datos y lógica: ETAPAS, TAREAS, DETALLES, RANGOS, COLORES), `tracker.js` (pestaña Tracker), `courses.js` (pestaña Courses)
 - `carrera/` → "Mi carrera": `index.html`, `carrera.css`, `malla.js` (lista `PLAN_BASE`: 16 cuatrimestres, 70 materias con laboratorios separados), `carrera.js` (gráfico circular, modo reordenar). Para agregar materias se cambia solo `malla.js`: `completarPlan()` en carrera.js las añade al orden guardado sin perderlo. Nunca cambiar ids existentes (son las claves de `carrera-aprobadas`). Materias sin código conocido usan ids en palabras (`biomecanica`, `lab-biomecanica`, `tcu`, `seminario-graduacion`).
 - `horarios/` → "Horarios": `index.html`, `horarios.css`, `horarios.js` (opciones por cuatrimestre, cuadrícula semanal, choques). Carga `../carrera/malla.js` para los cuatrimestres y el autocompletado.
+- `notas/` → "Mis notas": `index.html`, `notas.css`, `notas.js`. Por cuatrimestre (por defecto el que está en curso): materias con evaluaciones (nombre, %, nota; nota vacía = pendiente), promedio actual y cuánto necesita en lo que falta para su meta (70 por defecto, nota mínima de ULACIT). Sugiere materias de su horario ★ (`horarios-db`) y de su malla (`carrera-plan`). También carga `../carrera/malla.js`.
 - Íconos en la raíz: `favicon.png`, `icon.png` (ícono de iPad / apple-touch-icon). Desde las subcarpetas se enlazan con `../`.
 
 ## Diseño (mantenerlo igual en todo módulo)
@@ -31,6 +32,7 @@ El navegador guarda por sitio web, no por carpeta, y cada módulo usa su propio 
 - `roadmap-hechas`, `roadmap-fechas`, `roadmap-apps` (tracker), `roadmap-cursos-extra`
 - `carrera-aprobadas`, `carrera-plan`, `carrera-resumen` (el hub lee este último)
 - `horarios-db` ({periodos: {"I-2027": {opciones, elegida, activa}}}), `horarios-resumen` ({periodo, opciones, elegida} del próximo cuatrimestre; lo lee el hub). Horarios también lee `carrera-plan` para sugerir primero las materias de ese cuatrimestre.
+- `notas-db` ({periodos: {"III-2026": {materias: [{id, nombre, meta, evals: [{id, nombre, peso, nota}]}]}}}), `notas-resumen` ({periodo, materias, promedio, riesgo} del cuatrimestre en curso; lo lee el hub).
 - El hub también lee `roadmap-hechas` y `roadmap-apps` para mostrar su avance.
 
 ## Lecciones aprendidas (errores que ya pasaron)
