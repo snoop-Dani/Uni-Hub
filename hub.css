@@ -1,0 +1,32 @@
+/* ===== PALETA ===== */
+:root {
+  --keen-green: #6B843A; --moss: #2B640E;
+  --dolphin: #E9B0BB; --blush: #D98695; --cherry: #C25474; --berry: #941B43;
+  --bg: #F8F1F2; --r: 22px;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 12px; background: var(--bg); color: #262626; font-family: "DM Sans", system-ui, sans-serif; }
+
+/* ===== CABECERA ===== */
+.banner { background: var(--keen-green); color: #fff; border-radius: 32px; padding: 18px 26px; display: grid; gap: 14px; }
+.app-title { font-size: 13px; font-weight: 700; letter-spacing: .08em; }
+.banner-main { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.banner h1 { margin: 0; font-size: clamp(26px, 4vw, 36px); }
+.banner p { margin: 4px 0 0; font-size: 13px; opacity: .85; }
+.banner .hoy { font-size: 14px; font-weight: 700; opacity: 1; }
+
+/* ===== MÓDULOS ===== */
+.section-head { display: flex; justify-content: space-between; align-items: baseline; margin: 18px 4px 10px; }
+.section-head h2 { margin: 0; font-size: 22px; color: var(--keen-green); }
+.section-head span { font-size: 12px; color: #6b6b6b; }
+.modulos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.mod { display: flex; flex-direction: column; gap: 8px; min-height: 190px; padding: 20px 22px; border-radius: var(--r); color: #fff; text-decoration: none; }
+.mod:active { transform: scale(.98); }
+.mod-berry { background: var(--berry); } .mod-keen { background: var(--keen-green); }
+.mod-cherry { background: var(--cherry); } .mod-moss { background: var(--moss); }
+.mod .icono { font-size: 30px; }
+.mod h3 { margin: 0; font-size: 20px; line-height: 1.2; }
+.mod .desc { margin: 0; font-size: 14px; line-height: 1.4; opacity: .95; }
+.mod .datos { margin: 0; font-size: 12px; font-weight: 700; background: rgba(255,255,255,.18); border-radius: 12px; padding: 6px 10px; }
+.mod .abrir { margin-top: auto; align-self: flex-start; background: #fff; color: #262626; border-radius: 999px; padding: 8px 18px; font-size: 14px; font-weight: 700; }
+.mod.vacio { border: 2px dashed var(--moss); background: transparent; color: var(--keen-green); align-items: center; justify-content: center; text-align: center; font-weight: 700; }

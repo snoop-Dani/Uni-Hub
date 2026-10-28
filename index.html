@@ -3,104 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Roadmap">
-  <meta name="theme-color" content="#2B640E">
-  <title>Internship Roadmap</title>
+  <title>Uni-Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="apple-touch-icon" href="icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Uni-Hub">
+  <meta name="theme-color" content="#2B640E">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="hub.css">
 </head>
 <body>
 
-  <!-- ===== BARRA SUPERIOR ===== -->
   <header class="banner">
-
-    <div class="banner-top">
-      <span class="app-title">MY INTERNSHIP ROADMAP — 2026/2027</span>
-      <nav class="tabs">
-        <a class="tab active" href="#" data-vista="dashboard">Dashboard</a>
-        <a class="tab" href="#" data-vista="roadmap">Roadmap</a>
-        <a class="tab" href="#" data-vista="tracker">Tracker</a>
-        <a class="tab" href="#" data-vista="courses">Courses</a>
-      </nav>
-    </div>
-
+    <span class="app-title">UNI-HUB</span>
     <div class="banner-main">
-      <div class="greeting">
+      <div>
         <h1>Hola Daniela</h1>
-        <p>Ing. biomédica → prácticas en junio de 2027</p>
+        <p>Ing. biomédica · tu centro de control universitario</p>
       </div>
-
-      <div class="progress">
-        <h2>Progreso general: <span id="pct-general">0</span>%</h2>
-        <div class="bar"><div class="bar-fill" id="barra-general"></div></div>
-        <div class="bar-labels"><span>0%</span><span>100%</span></div>
-      </div>
-
-      <div class="counter">
-        <div class="ring" id="anillo">0/45</div>
-        <div>
-          <strong>Tareas listas</strong>
-          <p id="fecha"></p>
-        </div>
-      </div>
+      <p class="hoy" id="fecha-hub"></p>
     </div>
-
   </header>
 
-  <main class="vista" id="vista-dashboard">
-    <div class="dash">
-      <section class="dash-cards">
-        <div class="section-head">
-          <h2>Roadmap ↗</h2>
-          <span>8 stages · 9 meses · Oct 2026–Jun 2027</span>
-        </div>
-        <div class="stages" id="stages"></div>
-      </section>
-      <aside class="dash-side">
-        <section class="panel" id="calendario"></section>
-        <section class="panel upcoming" id="upcoming"></section>
-      </aside>
-            <section class="panel dash-tracker" id="tracker-mini"></section>
+  <main>
+    <div class="section-head">
+      <h2>Tus módulos</h2>
+      <span id="cuenta"></span>
     </div>
+    <div class="modulos" id="modulos"></div>
   </main>
 
-  <main class="vista" id="vista-roadmap" hidden>
-    <div class="tl-barra" id="tl-barra"></div>
-    <div class="tl" id="roadmap-lista"></div>
-  </main>
-
-  <main class="vista" id="vista-tracker" hidden>
-    <div class="tk">
-      <div class="tk-head">
-        <h2>Application tracker</h2>
-        <p>Registra cada pasantía: estado, fechas, enlace, requisitos y contacto. Se guarda en este dispositivo.</p>
-      </div>
-      <div class="tk-stats" id="tk-stats"></div>
-      <div class="tk-bar">
-        <button class="tk-btn" data-agregar>+ Añadir empresa</button>
-        <button class="tk-btn suave" data-borrar-todo>Borrar todo</button>
-      </div>
-      <div class="tk-tabla">
-        <div class="tk-cols"><span>Empresa</span><span>Puesto</span><span>Enlace</span><span>Aplicado</span><span>Estado</span><span>Seguimiento</span><span>Notas</span><span></span></div>
-        <div id="tk-filas"></div>
-      </div>
-    </div>
-  </main>
-
-  <main class="vista" id="vista-courses" hidden>
-    <div class="cr">
-      <div class="cr-head">
-        <h2>Courses</h2>
-      </div>
-      <div class="cr-stats" id="cr-stats"></div>
-      <div class="cr-grid" id="cr-grid"></div>
-    </div>
-  </main>
-  <script src="script.js"></script>
-  <script src="tracker.js"></script>
-    <script src="courses.js?"></script>
+  <script src="hub.js"></script>
 </body>
 </html>
