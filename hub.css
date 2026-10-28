@@ -29,8 +29,6 @@ body { margin: 0; padding: 12px; background: var(--bg); color: #262626; font-fam
 .mod .desc { margin: 0; font-size: 14px; line-height: 1.4; opacity: .95; }
 .mod .datos { margin: 0; font-size: 12px; font-weight: 700; background: rgba(255,255,255,.18); border-radius: 12px; padding: 6px 10px; }
 .mod .abrir { margin-top: auto; align-self: flex-start; background: #fff; color: #262626; border-radius: 999px; padding: 8px 18px; font-size: 14px; font-weight: 700; }
-.mod.vacio { border: 2px dashed var(--moss); background: transparent; color: var(--keen-green); align-items: center; justify-content: center; text-align: center; font-weight: 700; }
-
 /* ===== RESPALDO ===== */
 [hidden] { display: none !important; }
 .respaldo { margin-top: 12px; background: #fff; border-radius: var(--r); padding: 18px 22px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }

@@ -167,7 +167,7 @@ function dibujar() {
       <p class="desc">${esc(m.desc)}</p>
       ${m.datos ? `<p class="datos">${esc(m.datos())}</p>` : ""}
       <span class="abrir">Abrir →</span>
-    </a>`).join("") + '<div class="mod vacio">＋ Aquí irá mi próximo módulo</div>';
+    </a>`).join("");
   dibujarRespaldo();
 }
 
