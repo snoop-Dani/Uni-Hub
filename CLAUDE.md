@@ -34,6 +34,8 @@ El navegador guarda por sitio web, no por carpeta, y cada módulo usa su propio 
 - `horarios-db` ({periodos: {"I-2027": {opciones, elegida, activa}}}), `horarios-resumen` ({periodo, opciones, elegida} del próximo cuatrimestre; lo lee el hub). Horarios también lee `carrera-plan` para sugerir primero las materias de ese cuatrimestre.
 - `notas-db` ({periodos: {"III-2026": {materias: [{id, nombre, meta, evals: [{id, nombre, peso, nota}]}]}}}), `notas-resumen` ({periodo, materias, promedio, riesgo} del cuatrimestre en curso; lo lee el hub).
 - El hub también lee `roadmap-hechas` y `roadmap-apps` para mostrar su avance.
+- **Respaldo** (sección "Mis datos" en el hub, `hub.js`): descarga/restaura todas las claves cuyo prefijo está en `PREFIJOS` (`roadmap-`, `carrera-`, `horarios-`, `notas-`). **Al crear un módulo nuevo, agregar su prefijo a `PREFIJOS`** o sus datos no entrarán en el respaldo. Claves propias del respaldo (no se respaldan): `unihub-ultimo-respaldo` (fecha, recordatorio a los 14 días) y `unihub-antes-de-restaurar` (copia para "Deshacer la restauración").
+- En localStorage, borrar los datos de Safari borra todo: recordarle descargar respaldo.
 
 ## Lecciones aprendidas (errores que ya pasaron)
 - Los JS cargados después de `script.js` (tracker.js, courses.js) comparten el ámbito global: no se puede redeclarar `const`/`let`, pero sí reemplazar funciones (tracker.js reemplaza `dibujarTracker` e `irAEmpresa`). Cada archivo debe definir sus propios ayudantes; `script.js` NO tiene `poner`/`escuchar`.
@@ -44,5 +46,6 @@ El navegador guarda por sitio web, no por carpeta, y cada módulo usa su propio 
 
 ## Pendientes
 (Hechos el 28 oct 2026: enlace "← Uni-Hub" en el roadmap, módulo `horarios/`, y se agregaron a la malla Elementos de biomecánica + lab (II 2028), TCU (III 2029) y Seminario de graduación (II 2030). Inglés I y II no: convalidados o no aplican.)
+(También hechos: módulo `notas/` y respaldo exportar/importar en el hub.)
 1. Cuando ella los tenga, poner los códigos reales de esas 4 materias como nota (no cambiar sus ids).
-2. Idea: botones de exportar/importar respaldo de los datos (útil al cambiar de dispositivo o de dirección web).
+2. Ideas de módulos que le propuse: Entregas y exámenes, Requisitos de graduación (checklist + horas de TCU), Sesiones de estudio, Portafolio de proyectos, Matrícula y pagos. La lectura automática de las guías de horario de ULACIT se descartó (la página tiene protección de Cloudflare).
