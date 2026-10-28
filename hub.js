@@ -25,6 +25,24 @@ function resumenEntregas() {
   };
 }
 
+// Lee lo que guarda Sesiones de estudio: minutos de hoy y de esta semana (lunes a domingo)
+function resumenEstudio() {
+  const db = leer("estudio-db"), s = db && Array.isArray(db.sesiones) ? db.sesiones : [];
+  const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const h = new Date(), lunes = new Date(h); lunes.setDate(h.getDate() - (h.getDay() + 6) % 7);
+  const hoy = iso(h), desde = iso(lunes);
+  const suma = lista => lista.reduce((t, x) => t + (x.minutos || 0), 0);
+  const activa = leer("estudio-activa");
+  return {
+    total: s.length,
+    hoy: suma(s.filter(x => x.fecha === hoy)),
+    semana: suma(s.filter(x => x.fecha >= desde && x.fecha <= hoy)),
+    meta: (db && db.ajustes && db.ajustes.meta) || 10,
+    activa: activa && (activa.fin === null || activa.fin > Date.now()) ? activa : null   // solo si sigue corriendo o en pausa
+  };
+}
+const fmtMin = m => { const h = Math.floor(m / 60), r = Math.round(m % 60); return h ? (r ? `${h} h ${r} min` : `${h} h`) : `${r} min`; };
+
 // ---------- Tus módulos ----------
 // Para añadir otro: copia un bloque, cambia los textos y pon la carpeta en "url" (por ejemplo "notas/")
 const MODULOS = [
@@ -59,6 +77,16 @@ const MODULOS = [
       partes.push(`${r.semana} esta semana`);
       if (r.prox) partes.push(`próxima: ${r.prox.titulo} (${r.enDias === 0 ? "hoy" : r.enDias === 1 ? "mañana" : `en ${r.enDias} días`})`);
       return partes.join(" · ");
+    } },
+  { icono: "⏱️", titulo: "Sesiones de estudio", color: "cherry", url: "estudio/",
+    desc: "Estudio con pomodoros, anoto mis horas por materia y sigo mi meta semanal.",
+    datos: () => {
+      const r = resumenEstudio();
+      if (!r.total && !r.activa) return "Aún sin sesiones";
+      const partes = [];
+      if (r.activa) partes.push(r.activa.modo === "enfoque" ? `⏱ Estudiando ${r.activa.materia}` : "☕ En descanso");
+      partes.push(`hoy ${fmtMin(r.hoy)}`, `semana ${String(Math.round(r.semana / 6) / 10).replace(".", ",")} de ${String(r.meta).replace(".", ",")} h`);
+      return partes.join(" · ");
     } }
 ];
 
@@ -81,7 +109,7 @@ function dibujar() {
 
 // ---------- Respaldo de mis datos ----------
 // Todo lo que guardan los módulos vive en este navegador. Aquí lo descargo en un archivo .json y lo puedo recuperar.
-const PREFIJOS = ["roadmap-", "carrera-", "horarios-", "notas-", "entregas-"];   // si agregas un módulo, pon aquí su prefijo
+const PREFIJOS = ["roadmap-", "carrera-", "horarios-", "notas-", "entregas-", "estudio-"];   // si agregas un módulo, pon aquí su prefijo
 const ULTIMO = "unihub-ultimo-respaldo";                             // fecha del último respaldo descargado
 const ANTES = "unihub-antes-de-restaurar";                           // copia de seguridad para "Deshacer"
 const esMio = clave => PREFIJOS.some(p => clave.startsWith(p));
