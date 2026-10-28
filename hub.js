@@ -44,6 +44,25 @@ function resumenEstudio() {
 }
 const fmtMin = m => { const h = Math.floor(m / 60), r = Math.round(m % 60); return h ? (r ? `${h} h ${r} min` : `${h} h`) : `${r} min`; };
 
+// Lee lo que guarda Matrícula y pagos: pagos vencidos, el próximo y fechas importantes cercanas (de todos los cuatrimestres)
+function resumenPagos() {
+  const db = leer("pagos-db"), periodos = db && db.periodos ? Object.values(db.periodos) : [];
+  const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+  const dias = f => { const [a, m, d] = f.split("-").map(Number); return Math.round((new Date(a, m - 1, d) - hoy) / 86400000); };
+  const cuotas = [], fechas = [];
+  periodos.forEach(p => {
+    if (Array.isArray(p.cuotas)) p.cuotas.filter(q => !q.pagada && q.fecha).forEach(q => cuotas.push(q));
+    if (Array.isArray(p.fechas)) p.fechas.filter(f => f.fecha && dias(f.fecha) >= 0 && dias(f.fecha) <= 14).forEach(f => fechas.push(f));
+  });
+  const orden = (a, b) => a.fecha.localeCompare(b.fecha);
+  return {
+    moneda: (db && db.moneda) || "₡", hayDatos: periodos.some(p => (p.cuotas || []).length || (p.conceptos || []).length || (p.fechas || []).length),
+    vencidas: cuotas.filter(q => dias(q.fecha) < 0).length,
+    prox: cuotas.filter(q => dias(q.fecha) >= 0).sort(orden)[0], fecha: fechas.sort(orden)[0], dias
+  };
+}
+const enDias = d => d === 0 ? "hoy" : d === 1 ? "mañana" : `en ${d} días`;
+
 // ---------- Tus módulos ----------
 // Para añadir otro: copia un bloque, cambia los textos y pon la carpeta en "url" (por ejemplo "notas/")
 const MODULOS = [
@@ -89,6 +108,17 @@ const MODULOS = [
       partes.push(`hoy ${fmtMin(r.hoy)}`, `semana ${String(Math.round(r.semana / 6) / 10).replace(".", ",")} de ${String(r.meta).replace(".", ",")} h`);
       if (r.temasHoy) partes.push(`📚 ${r.temasHoy} ${r.temasHoy === 1 ? "tema" : "temas"} para hoy`);
       return partes.join(" · ");
+    } },
+  { icono: "💳", titulo: "Matrícula y pagos", color: "moss", url: "pagos/",
+    desc: "Anoto los costos de cada cuatrimestre, mis becas y mis pagos, y no se me pasa ninguna fecha.",
+    datos: () => {
+      const r = resumenPagos();
+      if (!r.hayDatos) return "Aún sin pagos";
+      const partes = [];
+      if (r.vencidas) partes.push(`⚠ ${r.vencidas} ${r.vencidas === 1 ? "pago vencido" : "pagos vencidos"}`);
+      partes.push(r.prox ? `próximo: ${r.moneda}${r.prox.monto.toLocaleString("es-CR", { maximumFractionDigits: 2 })} (${enDias(r.dias(r.prox.fecha))})` : "sin pagos pendientes ✓");
+      if (r.fecha) partes.push(`📌 ${r.fecha.nombre} ${enDias(r.dias(r.fecha.fecha))}`);
+      return partes.join(" · ");
     } }
 ];
 
@@ -111,7 +141,7 @@ function dibujar() {
 
 // ---------- Respaldo de mis datos ----------
 // Todo lo que guardan los módulos vive en este navegador. Aquí lo descargo en un archivo .json y lo puedo recuperar.
-const PREFIJOS = ["roadmap-", "carrera-", "horarios-", "notas-", "entregas-", "estudio-"];   // si agregas un módulo, pon aquí su prefijo
+const PREFIJOS = ["roadmap-", "carrera-", "horarios-", "notas-", "entregas-", "estudio-", "pagos-"];   // si agregas un módulo, pon aquí su prefijo
 const ULTIMO = "unihub-ultimo-respaldo";                             // fecha del último respaldo descargado
 const ANTES = "unihub-antes-de-restaurar";                           // copia de seguridad para "Deshacer"
 const esMio = clave => PREFIJOS.some(p => clave.startsWith(p));

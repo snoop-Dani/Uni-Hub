@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrícula y pagos · Uni-Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="apple-touch-icon" href="../icon.png">
+  <meta name="theme-color" content="#6B843A">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="pagos.css?v=1">
+</head>
+<body>
+
+  <header class="banner">
+    <span class="app-title"><a class="volver" href="../">← Uni-Hub</a> · MATRÍCULA Y PAGOS</span>
+    <div class="banner-main">
+      <div>
+        <h1>Matrícula y pagos</h1>
+        <p>Sé cuánto cuesta mi cuatrimestre, cuánto he pagado y cuándo vence cada pago</p>
+      </div>
+      <label class="periodo">Cuatrimestre
+        <select id="periodo"></select>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <!-- Resumen: total, pagado, pendiente, próximo pago -->
+    <div class="stats" id="stats"></div>
+
+    <div class="columnas">
+      <!-- Costos de matrícula (cargos y descuentos) -->
+      <section class="panel" id="costos"></section>
+      <!-- Fechas importantes -->
+      <section class="panel" id="fechas"></section>
+    </div>
+
+    <!-- Plan de pagos (cuotas) -->
+    <section class="panel" id="cuotas"></section>
+  </main>
+
+  <!-- Formularios (aparecen encima) -->
+  <div class="hoja-fondo" id="hoja" hidden>
+    <form class="hoja" id="form" novalidate></form>
+  </div>
+
+  <script src="../carrera/malla.js?v=4"></script>
+  <script src="pagos.js?v=1"></script>
+</body>
+</html>
