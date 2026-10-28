@@ -47,7 +47,7 @@ main { display: grid; gap: 12px; margin-top: 12px; }
 .reloj .barra { width: 100%; height: 8px; border-radius: 999px; background: rgba(255,255,255,.3); overflow: hidden; }
 .reloj .barra i { display: block; height: 100%; width: 0; background: var(--dolphin); border-radius: 999px; transition: width 1s linear; }
 .r-materia { width: 100%; display: grid; gap: 6px; font-size: 13px; font-weight: 700; text-align: left; }
-.r-materia input { -webkit-appearance: none; appearance: none; width: 100%; min-height: 46px; font: inherit; font-size: 16px; font-weight: 400; color: #262626; border: 0; border-radius: 14px; padding: 10px 12px; background: #fff; }
+.r-materia input, .r-materia select { -webkit-appearance: none; appearance: none; width: 100%; min-height: 46px; font: inherit; font-size: 16px; font-weight: 400; color: #262626; border: 0; border-radius: 14px; padding: 10px 12px; background: #fff; }
 .r-opc { width: 100%; display: grid; gap: 6px; font-size: 12px; font-weight: 700; text-align: left; }
 .r-pils { display: flex; gap: 6px; flex-wrap: wrap; }
 .r-pil { border: 0; border-radius: 999px; min-height: 40px; padding: 0 14px; background: rgba(255,255,255,.2); color: #fff; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
@@ -73,6 +73,34 @@ main { display: grid; gap: 12px; margin-top: 12px; }
 .c-berry { --cbg: var(--berry); } .c-keen { --cbg: var(--keen-green); }
 .c-cherry { --cbg: var(--cherry); } .c-moss { --cbg: var(--moss); }
 
+/* ===== MI PLAN DE ESTUDIO ===== */
+.p-acciones { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.vista { display: inline-flex; background: var(--bg); border-radius: 999px; padding: 3px; }
+.r-vista { border: 0; border-radius: 999px; min-height: 38px; padding: 0 14px; background: transparent; color: #555; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+.r-vista.on { background: var(--keen-green); color: #fff; }
+.plan-dia { margin-top: 12px; }
+.plan-dia h3 { margin: 0 0 8px; font-size: 15px; color: var(--keen-green); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.plan-dia h3 span { font-size: 12px; color: #6b6b6b; font-weight: 700; }
+.plan-dia.alerta h3 { color: var(--rojo); }
+.temas { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+/* tarjeta de tema (texto siempre blanco) */
+.tema { background: var(--cbg); color: #fff; border-radius: var(--r); display: flex; align-items: stretch; overflow: hidden; }
+.tema.atrasado { --cbg: var(--rojo); }   /* rojo solo si ya pasó el día y no lo terminé */
+.tema.hecho { opacity: .55; }
+.tema.hecho .t-info b { text-decoration: line-through; text-decoration-color: rgba(255,255,255,.7); }
+.check { flex: none; width: 52px; border: 0; border-right: 1px solid rgba(255,255,255,.25); background: transparent; color: #fff; font: inherit; cursor: pointer; touch-action: manipulation; display: grid; place-items: center; }
+.check span { width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(255,255,255,.8); display: grid; place-items: center; font-weight: 700; font-size: 15px; }
+.tema.hecho .check span { background: #fff; color: var(--cbg); }
+.t-cuerpo { flex: 1; min-width: 0; padding: 10px 12px; display: grid; gap: 6px; }
+.t-info { border: 0; background: transparent; color: inherit; font: inherit; text-align: left; padding: 0; display: grid; gap: 2px; cursor: pointer; touch-action: manipulation; }
+.t-info b { font-size: 15px; line-height: 1.3; }
+.t-info small { font-size: 12px; opacity: .9; }
+.tema .barra { height: 6px; border-radius: 999px; background: rgba(255,255,255,.3); overflow: hidden; }
+.tema .barra i { display: block; height: 100%; background: var(--dolphin); border-radius: 999px; }
+.t-pie { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; }
+.t-estudiar { border: 0; border-radius: 999px; min-height: 36px; padding: 0 14px; background: #fff; color: var(--cbg); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+.nota { margin: 0; font-size: 13px; color: #555; }
+
 /* ===== HISTORIAL ===== */
 .dia { margin-top: 10px; }
 .dia h3 { margin: 0 0 6px; font-size: 14px; color: var(--keen-green); display: flex; justify-content: space-between; }
@@ -89,7 +117,7 @@ main { display: grid; gap: 12px; margin-top: 12px; }
 .hoja h2 { grid-column: 1 / -1; margin: 0; color: var(--keen-green); }
 .ancho { grid-column: 1 / -1; }
 .campo { display: grid; gap: 6px; align-content: start; font-size: 13px; font-weight: 700; color: #555; }
-.campo input, .dur select { -webkit-appearance: none; appearance: none; width: 100%; min-height: 44px; font: inherit; font-size: 16px; font-weight: 400; color: #262626; border: 2px solid #EEDDE0; border-radius: 14px; padding: 10px 12px; background: var(--bg); }
+.campo input, .campo .sel, .dur select { -webkit-appearance: none; appearance: none; width: 100%; min-height: 44px; font: inherit; font-size: 16px; font-weight: 400; color: #262626; border: 2px solid #EEDDE0; border-radius: 14px; padding: 10px 12px; background: var(--bg); }
 .dur { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .dur select { text-align: center; cursor: pointer; }
 /* Fecha: texto bonito con el calendario del iPad invisible encima */

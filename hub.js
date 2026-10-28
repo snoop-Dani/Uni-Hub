@@ -38,6 +38,7 @@ function resumenEstudio() {
     hoy: suma(s.filter(x => x.fecha === hoy)),
     semana: suma(s.filter(x => x.fecha >= desde && x.fecha <= hoy)),
     meta: (db && db.ajustes && db.ajustes.meta) || 10,
+    temasHoy: db && Array.isArray(db.temas) ? db.temas.filter(t => !t.hecho && t.fecha === hoy).length : 0,   // de mi plan de estudio
     activa: activa && (activa.fin === null || activa.fin > Date.now()) ? activa : null   // solo si sigue corriendo o en pausa
   };
 }
@@ -79,13 +80,14 @@ const MODULOS = [
       return partes.join(" · ");
     } },
   { icono: "⏱️", titulo: "Sesiones de estudio", color: "cherry", url: "estudio/",
-    desc: "Estudio con pomodoros, anoto mis horas por materia y sigo mi meta semanal.",
+    desc: "Planeo los temas que voy a estudiar, los estudio con pomodoros y sigo mi meta semanal.",
     datos: () => {
       const r = resumenEstudio();
-      if (!r.total && !r.activa) return "Aún sin sesiones";
+      if (!r.total && !r.activa && !r.temasHoy) return "Aún sin sesiones";
       const partes = [];
       if (r.activa) partes.push(r.activa.modo === "enfoque" ? `⏱ Estudiando ${r.activa.materia}` : "☕ En descanso");
       partes.push(`hoy ${fmtMin(r.hoy)}`, `semana ${String(Math.round(r.semana / 6) / 10).replace(".", ",")} de ${String(r.meta).replace(".", ",")} h`);
+      if (r.temasHoy) partes.push(`📚 ${r.temasHoy} ${r.temasHoy === 1 ? "tema" : "temas"} para hoy`);
       return partes.join(" · ");
     } }
 ];
