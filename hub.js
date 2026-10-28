@@ -18,7 +18,14 @@ const MODULOS = [
     datos: () => { const r = resumenRoadmap(); return `${r.n}/${TOTAL_ROADMAP} tareas · ${r.pct}% · ${r.empresas} empresas`; } },
   { icono: "🎓", titulo: "Mi carrera", color: "berry", url: "carrera/",
     desc: "Marca las materias que ya aprobaste y mira tu avance en Ingeniería Biomédica con un gráfico circular.",
-    datos: () => { const r = leer("carrera-resumen"); return r ? `${r.n}/${r.total} materias · ${r.pct}% de la carrera` : "Aún sin materias marcadas"; } }
+    datos: () => { const r = leer("carrera-resumen"); return r ? `${r.n}/${r.total} materias · ${r.pct}% de la carrera` : "Aún sin materias marcadas"; } },
+  { icono: "🗓️", titulo: "Horarios", color: "cherry", url: "horarios/",
+    desc: "Arma varias opciones de horario por cuatrimestre, detecta choques y elige la tuya.",
+    datos: () => {
+      const r = leer("horarios-resumen");
+      if (!r || !r.opciones) return r ? `Próximo: ${r.periodo} · aún sin opciones` : "Aún sin horarios";
+      return `${r.periodo} · ${r.opciones} ${r.opciones === 1 ? "opción" : "opciones"} · ${r.elegida ? "★ " + r.elegida : "sin elegir"}`;
+    } }
 ];
 
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");

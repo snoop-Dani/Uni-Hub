@@ -2,6 +2,8 @@
 
 Sitio estático (HTML + CSS + JavaScript puro, sin frameworks ni build) para organizar la vida universitaria de Daniela (Ingeniería Biomédica, ULACIT, Costa Rica). Se publica en GitHub Pages (repositorio público). Lo usa sobre todo en un **iPad (Safari)** y también en laptop.
 
+**Carpeta correcta:** `C:\Users\dsa16\Documentos\GitHub\Uni-Hub` (fuera de OneDrive, porque OneDrive puede dañar la carpeta `.git`). La copia en `OneDrive\Documentos\GitHub\Uni-Hub` es vieja: no trabajar ni hacer commits ahí.
+
 ## Cómo trabajar con ella
 - Responde siempre en español.
 - Está aprendiendo programación: explica en simple, paso a paso, con comentarios claros en el código.
@@ -11,7 +13,8 @@ Sitio estático (HTML + CSS + JavaScript puro, sin frameworks ni build) para org
 ## Estructura
 - `index.html`, `hub.css`, `hub.js` → Uni-Hub (página de inicio con tarjetas de módulos; lista `MODULOS` en hub.js)
 - `roadmap/` → roadmap de pasantía: `index.html`, `styles.css`, `script.js` (datos y lógica: ETAPAS, TAREAS, DETALLES, RANGOS, COLORES), `tracker.js` (pestaña Tracker), `courses.js` (pestaña Courses)
-- `carrera/` → "Mi carrera": `index.html`, `carrera.css`, `carrera.js` (malla de 66 materias con laboratorios separados, gráfico circular, modo reordenar)
+- `carrera/` → "Mi carrera": `index.html`, `carrera.css`, `malla.js` (lista `PLAN_BASE`: 16 cuatrimestres, 70 materias con laboratorios separados), `carrera.js` (gráfico circular, modo reordenar). Para agregar materias se cambia solo `malla.js`: `completarPlan()` en carrera.js las añade al orden guardado sin perderlo. Nunca cambiar ids existentes (son las claves de `carrera-aprobadas`). Materias sin código conocido usan ids en palabras (`biomecanica`, `lab-biomecanica`, `tcu`, `seminario-graduacion`).
+- `horarios/` → "Horarios": `index.html`, `horarios.css`, `horarios.js` (opciones por cuatrimestre, cuadrícula semanal, choques). Carga `../carrera/malla.js` para los cuatrimestres y el autocompletado.
 - Íconos en la raíz: `favicon.png`, `icon.png` (ícono de iPad / apple-touch-icon). Desde las subcarpetas se enlazan con `../`.
 
 ## Diseño (mantenerlo igual en todo módulo)
@@ -26,22 +29,17 @@ Sitio estático (HTML + CSS + JavaScript puro, sin frameworks ni build) para org
 El navegador guarda por sitio web, no por carpeta, y cada módulo usa su propio prefijo. **No renombrar claves existentes** (se perderían los datos de Daniela):
 - `roadmap-hechas`, `roadmap-fechas`, `roadmap-apps` (tracker), `roadmap-cursos-extra`
 - `carrera-aprobadas`, `carrera-plan`, `carrera-resumen` (el hub lee este último)
+- `horarios-db` ({periodos: {"I-2027": {opciones, elegida, activa}}}), `horarios-resumen` ({periodo, opciones, elegida} del próximo cuatrimestre; lo lee el hub). Horarios también lee `carrera-plan` para sugerir primero las materias de ese cuatrimestre.
 - El hub también lee `roadmap-hechas` y `roadmap-apps` para mostrar su avance.
 
 ## Lecciones aprendidas (errores que ya pasaron)
 - Los JS cargados después de `script.js` (tracker.js, courses.js) comparten el ámbito global: no se puede redeclarar `const`/`let`, pero sí reemplazar funciones (tracker.js reemplaza `dibujarTracker` e `irAEmpresa`). Cada archivo debe definir sus propios ayudantes; `script.js` NO tiene `poner`/`escuchar`.
 - Safari/iPad guarda en caché CSS y JS: al cambiar un archivo, subir el número `?v=N` en los `<script>` y `<link>`.
-- Antes de decir "ya funciona", probar. Una prueba rápida con jsdom (simular el DOM y los clics) sirve para comprobar la lógica.
+- Antes de decir "ya funciona", probar. En esta computadora no hay Node.js (ni jsdom), pero sí Edge: `msedge --headless=new --allow-file-access-from-files --dump-dom file:///…` carga la página real con un script de prueba que simula clics, y `--screenshot` (lanzado con `Start-Process … -Wait`) sirve para ver cómo se ve en tamaño iPad (`--window-size=820,1180`).
+- `git` no está en el PATH; GitHub Desktop trae el suyo en `%LOCALAPPDATA%\GitHubDesktop\app-*\resources\app\git\cmd\git.exe`. El push lo hace ella desde GitHub Desktop.
 - El repositorio es público: no escribir datos personales (teléfonos, correos de contactos) dentro de los archivos. Los datos que ella escribe en la app se quedan en su navegador.
 
 ## Pendientes
-1. Agregar el enlace "← Uni-Hub" en `roadmap/index.html`: cambiar el `<span class="app-title">` por `<span class="app-title"><a class="volver" href="../">← Uni-Hub</a> · MY INTERNSHIP ROADMAP — 2026/2027</span>` y añadir en `roadmap/styles.css` la regla `.volver { color:#fff; text-decoration:none; border-bottom:1px solid rgba(255,255,255,.55); padding:6px 2px; }`.
-2. **Módulo `horarios/`** (index.html, horarios.css, horarios.js) para armar horarios por cuatrimestre:
-   - Selector de los 16 cuatrimestres de su malla (II 2025 … II 2030); por defecto, el siguiente cuatrimestre a empezar (I = ene–abr, II = may–ago, III = sep–dic).
-   - Varias **opciones** por cuatrimestre (Opción A, B, C…), con pestañas, renombrar, duplicar, eliminar y ★ "elegir como mi horario" (solo una elegida por cuatrimestre).
-   - Cada **clase**: materia (con autocompletado), profesor, presencial con aula o virtual, días (Lun–Sáb), hora de inicio y fin, estado de disponibilidad (por confirmar / disponible / sin cupo) y notas.
-   - Cuadrícula semanal con los bloques posicionados por hora; clases solapadas se reparten en carriles; **detección de choques** (se marcan en rojo; las "sin cupo" no cuentan). Resumen por opción: nº de clases, horas por semana, choques, sin cupo.
-   - Datos en `horarios-db`; resumen en `horarios-resumen` ({periodo, opciones, elegida}) para el hub.
-   - Agregar su tarjeta en `MODULOS` de `hub.js`.
-3. Preguntarle si faltan en su malla estas materias del PDF: Elementos de biomecánica (+ laboratorio), Trabajo comunal universitario, Seminario de graduación, Inglés I e Inglés II (quizá convalidadas).
-4. Idea: botones de exportar/importar respaldo de los datos (útil al cambiar de dispositivo o de dirección web).
+(Hechos el 28 oct 2026: enlace "← Uni-Hub" en el roadmap, módulo `horarios/`, y se agregaron a la malla Elementos de biomecánica + lab (II 2028), TCU (III 2029) y Seminario de graduación (II 2030). Inglés I y II no: convalidados o no aplican.)
+1. Cuando ella los tenga, poner los códigos reales de esas 4 materias como nota (no cambiar sus ids).
+2. Idea: botones de exportar/importar respaldo de los datos (útil al cambiar de dispositivo o de dirección web).
