@@ -52,7 +52,7 @@ const RADIO = 54, CIRC = 2 * Math.PI * RADIO;
 
 function dibujarResumen() {           // se dibuja una vez; después solo se actualizan los números
   poner("resumen", `
-    <h2>Tu avance</h2>
+    <h2>Mi avance</h2>
     <div class="donut">
       <svg viewBox="0 0 140 140" aria-hidden="true">
         <circle class="pista" cx="70" cy="70" r="${RADIO}"/>
@@ -78,14 +78,14 @@ function actualizarResumen() {
   const arco = $("arco");
   if (arco) { arco.style.strokeDashoffset = CIRC * (1 - n / total); arco.style.opacity = n ? 1 : 0; }
   texto("pct", pct + "%"); texto("n-ok", n); texto("n-falta", total - n);
-  texto("hito", n === total ? "🎉 ¡Completaste todas las materias! Revisa los requisitos de graduación: inglés B2, 150 h de TCU y sellos verdes."
-    : n >= mitad ? "✓ Ya pasaste el 50 %: puedes matricular Experiencia profesional I y el Trabajo comunal universitario."
-    : `Te faltan ${mitad - n} materias para el 50 %, requisito para matricular Experiencia profesional I y el Trabajo comunal universitario.`);
+  texto("hito", n === total ? "🎉 ¡Completé todas las materias! Ahora reviso los requisitos de graduación: inglés B2, 150 h de TCU y sellos verdes."
+    : n >= mitad ? "✓ Ya pasé el 50 %: puedo matricular Experiencia profesional I y el Trabajo comunal universitario."
+    : `Me faltan ${mitad - n} materias para el 50 %, requisito para matricular Experiencia profesional I y el Trabajo comunal universitario.`);
   const be = $("b-editar"); if (be) { be.textContent = editando ? "✓ Terminar de reordenar" : "✏️ Reordenar materias"; be.classList.toggle("verde", editando); }
   const bd = $("b-deshacer"); if (bd) bd.disabled = !anterior;
-  texto("ayuda", !editando ? "Toca una materia para marcarla como aprobada"
-    : sel ? `Moviendo «${CAT[sel].nombre}»: toca otra materia (para ponerla antes) o “＋ Poner aquí” en un cuatrimestre`
-    : "Modo reordenar: toca la materia que quieres mover");
+  texto("ayuda", !editando ? "Toco una materia para marcarla como aprobada"
+    : sel ? `Moviendo «${CAT[sel].nombre}»: toco otra materia (para ponerla antes) o “＋ Poner aquí” en un cuatrimestre`
+    : "Modo reordenar: toco la materia que quiero mover");
 }
 
 const codigo = id => /^\d\d-\d{4}$/.test(id) ? id : "";
@@ -135,9 +135,9 @@ document.addEventListener("click", ev => {
   if (ev.target.closest("[data-editar]")) { editando = !editando; sel = null; dibujar(); }
   else if (ev.target.closest("[data-deshacer]")) { if (anterior) { plan = JSON.parse(anterior); anterior = null; sel = null; dibujar(); } }
   else if (ev.target.closest("[data-restaurar]")) {
-    if (confirm("¿Volver al orden original de tu malla? (tus materias aprobadas no cambian)")) { anterior = JSON.stringify(plan); plan = clonarBase(); sel = null; dibujar(); }
+    if (confirm("¿Volver al orden original de mi malla? (mis materias aprobadas no cambian)")) { anterior = JSON.stringify(plan); plan = clonarBase(); sel = null; dibujar(); }
   }
-  else if (ev.target.closest("[data-reiniciar]")) { if (confirm("¿Borrar todas tus marcas de materias aprobadas?")) { aprobadas = {}; dibujar(); } }
+  else if (ev.target.closest("[data-reiniciar]")) { if (confirm("¿Borrar todas mis marcas de materias aprobadas?")) { aprobadas = {}; dibujar(); } }
   else if (!editando && ev.target.closest("[data-todo]")) {
     const lista = plan[Number(ev.target.closest("[data-todo]").dataset.todo)].ids, todas = lista.length > 0 && lista.every(id => aprobadas[id]);
     lista.forEach(id => { if (todas) delete aprobadas[id]; else aprobadas[id] = true; });

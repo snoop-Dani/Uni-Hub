@@ -45,7 +45,7 @@ function dibujarTracker() {
     <div class="tr-lista">${apps.length ? apps.map((a, i) => `
       <button class="tr-empresa" data-empresa="${i}"><b>${esc(a.empresa) || "Sin nombre"}</b>
         <span class="tr-estado"><i class="punto" style="--c:${EST[a.estado].color}"></i>${EST[a.estado].texto}${vence(a) ? " ⏰" : ""}</span></button>`).join("")
-      : '<span class="tr-vacio">Aún no hay empresas. Añádelas en la pestaña Tracker.</span>'}</div>`);
+      : '<span class="tr-vacio">Aún no hay empresas. Las añado en la pestaña Tracker.</span>'}</div>`);
 }
 
 // ---------- Resumen (tarjetas de arriba) ----------
@@ -77,7 +77,7 @@ function filaHTML(a) {
   </div>`;
 }
 function dibujarTabla() {
-  tkPoner("tk-filas", apps.length ? apps.map(filaHTML).join("") : '<p class="tk-vacio">Aún no hay empresas. Toca “+ Añadir empresa”.</p>');
+  tkPoner("tk-filas", apps.length ? apps.map(filaHTML).join("") : '<p class="tk-vacio">Aún no hay empresas. Toco “+ Añadir empresa” para empezar.</p>');
   dibujarResumen();
 }
 

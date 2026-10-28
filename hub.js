@@ -17,10 +17,10 @@ const MODULOS = [
     desc: "Etapas, tareas, calendario, tracker de empresas y cursos para llegar a junio de 2027.",
     datos: () => { const r = resumenRoadmap(); return `${r.n}/${TOTAL_ROADMAP} tareas · ${r.pct}% · ${r.empresas} empresas`; } },
   { icono: "🎓", titulo: "Mi carrera", color: "berry", url: "carrera/",
-    desc: "Marca las materias que ya aprobaste y mira tu avance en Ingeniería Biomédica con un gráfico circular.",
+    desc: "Marco las materias que ya aprobé y veo mi avance en Ingeniería Biomédica con un gráfico circular.",
     datos: () => { const r = leer("carrera-resumen"); return r ? `${r.n}/${r.total} materias · ${r.pct}% de la carrera` : "Aún sin materias marcadas"; } },
   { icono: "🗓️", titulo: "Horarios", color: "cherry", url: "horarios/",
-    desc: "Arma varias opciones de horario por cuatrimestre, detecta choques y elige la tuya.",
+    desc: "Armo varias opciones de horario por cuatrimestre, veo los choques y elijo la mía.",
     datos: () => {
       const r = leer("horarios-resumen");
       if (!r || !r.opciones) return r ? `Próximo: ${r.periodo} · aún sin opciones` : "Aún sin horarios";
@@ -41,7 +41,7 @@ function dibujar() {
       <p class="desc">${esc(m.desc)}</p>
       ${m.datos ? `<p class="datos">${esc(m.datos())}</p>` : ""}
       <span class="abrir">Abrir →</span>
-    </a>`).join("") + '<div class="mod vacio">＋ Aquí irá tu próximo módulo</div>';
+    </a>`).join("") + '<div class="mod vacio">＋ Aquí irá mi próximo módulo</div>';
 }
 
 dibujar();

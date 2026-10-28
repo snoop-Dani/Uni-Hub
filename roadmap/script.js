@@ -3,27 +3,27 @@ const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "o
 const MESES_CORTOS = ["Oct", "Nov", "Dic", "Ene", "Feb", "Mar", "Abr", "May", "Jun"];
 
 const ETAPAS = [
-  { icono: "🧭", color: "berry", titulo: "Define your direction", fechas: "Oct–Nov 2026",
-    objetivo: "Saber exactamente qué buscan las empresas antes de empezar a prepararte.",
-    descripcion: "Revisa vacantes reales, compara herramientas y busca los requisitos de ULACIT." },
-  { icono: "📊", color: "dolphin", titulo: "Build your data skills", fechas: "Nov–Dic 2026",
+  { icono: "🧭", color: "berry", titulo: "Define my direction", fechas: "Oct–Nov 2026",
+    objetivo: "Saber exactamente qué buscan las empresas antes de empezar a prepararme.",
+    descripcion: "Reviso vacantes reales, comparo herramientas y busco los requisitos de ULACIT." },
+  { icono: "📊", color: "dolphin", titulo: "Build my data skills", fechas: "Nov–Dic 2026",
     objetivo: "Tener una base sólida en análisis de datos.",
     descripcion: "Excel a nivel funcional y primeros pasos en R, con 2–3 horas por semana." },
   { icono: "🧬", color: "keen", titulo: "Biomedical foundations", fechas: "Dic 2026–Ene 2027",
     objetivo: "Conectar el análisis de datos con la ingeniería biomédica.",
     descripcion: "Curso de introducción a la ingeniería biomédica y práctica en R: importar, limpiar y graficar datos." },
-  { icono: "🔬", color: "cherry", titulo: "Build your project", fechas: "Ene–Feb 2027", principal: true,
-    objetivo: "Un proyecto que puedas enseñar en entrevistas.",
+  { icono: "🔬", color: "cherry", titulo: "Build my project", fechas: "Ene–Feb 2027", principal: true,
+    objetivo: "Un proyecto que pueda enseñar en entrevistas.",
     descripcion: "Rehacer el análisis de lotes de catéteres en R, con informe de 1–2 páginas y código en GitHub." },
   { icono: "🫀", color: "blush", titulo: "Physiology + Technical English", fechas: "Feb–Mar 2027",
     objetivo: "Hablar el idioma de la industria.",
     descripcion: "Fisiología, signos vitales y lectura de ofertas y documentación de dispositivos en inglés." },
-  { icono: "💼", color: "moss", titulo: "Build your professional profile", fechas: "Mar–Abr 2027",
-    objetivo: "Verte lista para las empresas.",
-    descripcion: "Actualizar CV y LinkedIn, armar tu lista de empresas y activar alertas de vacantes." },
+  { icono: "💼", color: "moss", titulo: "Build my professional profile", fechas: "Mar–Abr 2027",
+    objetivo: "Verme lista para las empresas.",
+    descripcion: "Actualizar CV y LinkedIn, armar mi lista de empresas y activar alertas de vacantes." },
   { icono: "🤝", color: "dolphin", titulo: "Networking + Interviews", fechas: "Abr–May 2027",
     objetivo: "Llegar a las entrevistas con contactos y práctica.",
-    descripcion: "Conectar con alumni y profesionales, y preparar tu pitch de 2–3 minutos en inglés." },
+    descripcion: "Conectar con alumni y profesionales, y preparar mi pitch de 2–3 minutos en inglés." },
   { icono: "🚀", color: "keen", titulo: "Application season", fechas: "Jun 2027",
     objetivo: "Postular a varias pasantías a la vez.",
     descripcion: "Personalizar el CV, registrar cada aplicación y dar seguimiento." }
@@ -43,20 +43,20 @@ const TAREAS = [
 
 // Descripción y tiempo estimado de cada tarea (mismo orden que TAREAS)
 const DETALLES = [
-  [ ["Lee ofertas de Medtronic, Roche, Abbott y otras", "2 h"], ["Anota cuántas piden Excel, R, Python o MATLAB", "1 h"], ["Elige según lo que más aparece en las vacantes", "30 min"],
+  [ ["Leo ofertas de Medtronic, Roche, Abbott y otras", "2 h"], ["Anoto cuántas piden Excel, R, Python o MATLAB", "1 h"], ["Elijo según lo que más aparece en las vacantes", "30 min"],
     ["Créditos mínimos y trámites de la práctica", "1 h"], ["Periodos en que se puede realizar", "30 min"], ["Horario, requisitos y si cuenta como práctica", "1 h"] ],
   [ ["Curso de Macquarie University en Coursera", "12 h"], ["Curso de Johns Hopkins en Coursera, modo auditoría", "20 h"], ["Hábito semanal de práctica", "continuo"], ["Fórmulas, tablas dinámicas y gráficos", "6 h"] ],
-  [ ["Curso de UCL y San Petersburgo en Coursera", "15 h"], ["Profundiza en lo básico del lenguaje", "8 h"], ["Leer archivos CSV en R", "2 h"],
+  [ ["Curso de UCL y San Petersburgo en Coursera", "15 h"], ["Profundizo en lo básico del lenguaje", "8 h"], ["Leer archivos CSV en R", "2 h"],
     ["Valores faltantes, tipos y formatos", "3 h"], ["Histogramas, cajas y dispersión", "3 h"], ["Comparar grupos y medias", "4 h"] ],
-  [ ["Repite el caso de Estadística usando R", "6 h"], ["Un dataset adicional para ampliar el análisis", "3 h"], ["Visualizaciones claras con título y ejes", "3 h"],
+  [ ["Repito el caso de Estadística usando R", "6 h"], ["Un dataset adicional para ampliar el análisis", "3 h"], ["Visualizaciones claras con título y ejes", "3 h"],
     ["Qué dicen los datos y qué decisión sugieren", "2 h"], ["Resumen con formato profesional", "4 h"], ["Repositorio con README", "2 h"] ],
-  [ ["Curso de Duke University en Coursera", "20 h"], ["Curso de University of Pennsylvania sobre signos vitales", "8 h"], ["Subraya el vocabulario técnico", "2 h"],
+  [ ["Curso de Duke University en Coursera", "20 h"], ["Curso de University of Pennsylvania sobre signos vitales", "8 h"], ["Subrayo el vocabulario técnico", "2 h"],
     ["Fichas técnicas y manuales", "3 h"], ["Lista propia de términos", "2 h"] ],
-  [ ["Una página, orientada a pasantías", "2 h"], ["Resultado y herramientas usadas", "1 h"], ["Excel, R y lo que hayas aprendido", "30 min"], ["Foto, titular y resumen", "2 h"],
-    ["Con enlace a su página de empleo", "2 h"], ["Registrarte para recibir vacantes", "30 min"], ["Activar notificaciones de pasantías", "30 min"], ["Abbott, Boston Scientific, Baxter", "30 min"] ],
-  [ ["En LinkedIn, en empresas de tu lista", "2 h"], ["Con mensaje breve y personalizado", "2 h"], ["Pedir un consejo de 15 minutos", "3 h"],
-    ["Quién eres y qué proyecto hiciste", "2 h"], ["Preguntas básicas en voz alta", "4 h"] ],
-  [ ["Mínimo cinco en paralelo", "6 h"], ["Ajustar palabras clave por puesto", "3 h"], ["Anota empresa, fecha y estado en el Tracker", "continuo"],
+  [ ["Una página, orientada a pasantías", "2 h"], ["Resultado y herramientas usadas", "1 h"], ["Excel, R y lo que haya aprendido", "30 min"], ["Foto, titular y resumen", "2 h"],
+    ["Con enlace a su página de empleo", "2 h"], ["Registrarme para recibir vacantes", "30 min"], ["Activar notificaciones de pasantías", "30 min"], ["Abbott, Boston Scientific, Baxter", "30 min"] ],
+  [ ["En LinkedIn, en empresas de mi lista", "2 h"], ["Con mensaje breve y personalizado", "2 h"], ["Pedir un consejo de 15 minutos", "3 h"],
+    ["Quién soy y qué proyecto hice", "2 h"], ["Preguntas básicas en voz alta", "4 h"] ],
+  [ ["Mínimo cinco en paralelo", "6 h"], ["Ajustar palabras clave por puesto", "3 h"], ["Anoto empresa, fecha y estado en el Tracker", "continuo"],
     ["A la semana o dos sin respuesta", "continuo"], ["Repasar proyecto y pitch", "3 h"] ]
 ];
 
@@ -198,8 +198,8 @@ function dibujarUpcoming() {
     return;
   }
   const j = TAREAS[a].findIndex((_, k) => !hechas[`${a}-${k}`]);
-  const nota = hechasDe(a) === 0 ? "Comienza con la primera tarea de esta etapa. ✨"
-                                 : `Llevas ${hechasDe(a)} de ${TAREAS[a].length} tareas de esta etapa. ✨`;
+  const nota = hechasDe(a) === 0 ? "Empiezo con la primera tarea de esta etapa. ✨"
+                                 : `Llevo ${hechasDe(a)} de ${TAREAS[a].length} tareas de esta etapa. ✨`;
   $("upcoming").innerHTML = `
     <div class="up-head"><h2>Upcoming</h2><span class="up-hasta">HASTA ${fechaCorta(RANGOS[a][1]).toUpperCase()} ↗</span></div>
     <p class="up-etapa">${pad(a + 1)} · ${ETAPAS[a].titulo} — ${porcentajeDe(a)}%</p>
@@ -228,7 +228,7 @@ function dibujarRoadmap() {
   const cur = tareaActual();
 
   $("tl-barra").innerHTML = `
-    <span class="tl-sig">${cur ? `Tu siguiente tarea: <b>${TAREAS[cur[0]][cur[1]]}</b>` : "¡Todo listo para aplicar! 🚀"}</span>
+    <span class="tl-sig">${cur ? `Mi siguiente tarea: <b>${TAREAS[cur[0]][cur[1]]}</b>` : "¡Todo listo para aplicar! 🚀"}</span>
     ${cur ? '<button class="tl-ir" data-ir>Ir</button>' : ""}
     <div class="tl-dots">${ETAPAS.map((_, i) => `<button class="tl-dot ${estadoEtapa(i, cur)}" data-etapa="${i}" aria-label="Etapa ${i + 1}">${pad(i + 1)}</button>`).join("")}</div>`;
 

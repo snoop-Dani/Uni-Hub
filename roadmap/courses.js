@@ -4,10 +4,10 @@ const CURSOS = [
   { titulo: "Excel Skills for Business: Essentials", inst: "Macquarie University", plataforma: "Coursera",
     url: "https://www.coursera.org/learn/excel-essentials",
     etapa: 1, tarea: [1, 0], tipo: "Herramienta",
-    desc: "El primer curso de la especialización de Excel de Macquarie. Parte desde cero y te lleva a usar Excel con soltura para resolver problemas reales de negocio.",
+    desc: "El primer curso de la especialización de Excel de Macquarie. Parte desde cero y me lleva a usar Excel con soltura para resolver problemas reales de negocio.",
     aprenderas: ["Interfaz, fórmulas y funciones", "Dar formato profesional a una hoja", "Crear y personalizar gráficos"],
     horas: "~26 h", ritmo: "3 semanas · 10 h por semana", nivel: "Principiante", idioma: "Inglés",
-    costo: "Gratis en modo oyente (si aparece al inscribirte) · certificado de pago",
+    costo: "Gratis en modo oyente (si aparece al inscribirme) · certificado de pago",
     valoracion: "98% lo recomienda · más de 1.1 M de inscritos",
     util: "Base para registros, control de calidad y seguimiento de datos en cualquier área." },
   { titulo: "R Programming", inst: "Johns Hopkins University", plataforma: "Coursera",
@@ -16,34 +16,34 @@ const CURSOS = [
     desc: "Parte de la especialización de Ciencia de Datos de Johns Hopkins. Enseña el lenguaje R desde sus conceptos de programación hasta herramientas para depurar y medir el rendimiento del código.",
     aprenderas: ["Conceptos del lenguaje R", "Instalar y configurar R", "Funciones de ciclo y depuración"],
     horas: "~57 h", ritmo: "6 semanas · 10 h por semana", nivel: "Intermedio", idioma: "Inglés",
-    costo: "Gratis en modo oyente (si aparece al inscribirte) · certificado de pago",
+    costo: "Gratis en modo oyente (si aparece al inscribirme) · certificado de pago",
     valoracion: "94% lo recomienda · unos 750 mil inscritos",
-    util: "El más pesado de la lista: empieza temprano. Es la base de tu proyecto con datos." },
+    util: "El más pesado de la lista: lo empiezo temprano. Es la base de mi proyecto con datos." },
   { titulo: "Introduction to Biomedical Engineering", inst: "Peter the Great St. Petersburg Polytechnic University (con apoyo de UCL)", plataforma: "Coursera",
     url: "https://www.coursera.org/learn/bioengineering",
     etapa: 2, tarea: [2, 0], tipo: "Fundamentos biomédicos",
     desc: "Curso práctico de ingeniería biomédica: cómo se capturan y procesan señales del cuerpo y cómo se diseñan sistemas como las prótesis biónicas. Pide solo matemáticas y física de nivel universitario.",
     aprenderas: ["Electrónica: amplificadores y filtros", "Teoría de control", "Arduino y MATLAB"],
     horas: "~18–40 h", ritmo: "4 semanas · 5 a 10 h por semana", nivel: "Principiante", idioma: "Inglés (con subtítulos en español)",
-    costo: "Gratis en modo oyente (si aparece al inscribirte) · certificado de pago",
+    costo: "Gratis en modo oyente (si aparece al inscribirme) · certificado de pago",
     valoracion: "Impartido por Dr. Kirill Aristovich",
-    util: "Incluye prácticas con MATLAB: al inscribirte, revisa qué necesitas para hacerlas." },
+    util: "Incluye prácticas con MATLAB: al inscribirme, reviso qué necesito para hacerlas." },
   { titulo: "Introductory Human Physiology", inst: "Duke University", plataforma: "Coursera",
     url: "https://www.coursera.org/learn/physiology",
     etapa: 4, tarea: [4, 0], tipo: "Fundamentos biomédicos",
     desc: "Recorre cómo funcionan los principales sistemas del cuerpo humano y cómo se integran para mantener la vida. No requiere experiencia previa.",
     aprenderas: ["Homeostasis y sistema endocrino", "Sistema nervioso y muscular", "Cardiovascular, respiratorio y digestivo"],
     horas: "~34 h", ritmo: "3 semanas · 10 h por semana · 10 módulos", nivel: "Principiante", idioma: "Inglés",
-    costo: "Gratis en modo oyente (si aparece al inscribirte) · certificado de pago",
+    costo: "Gratis en modo oyente (si aparece al inscribirme) · certificado de pago",
     valoracion: "97% lo recomienda · unos 600 mil inscritos",
-    util: "Te da el lenguaje del cuerpo para entender lo que mide cualquier dispositivo médico." },
+    util: "Me da el lenguaje del cuerpo para entender lo que mide cualquier dispositivo médico." },
   { titulo: "Vital Signs: Understanding What the Body Is Telling Us", inst: "University of Pennsylvania", plataforma: "Coursera",
     url: "https://www.coursera.org/learn/vital-signs",
     etapa: 4, tarea: [4, 1], tipo: "Fundamentos biomédicos",
     desc: "Explica la anatomía y la fisiología detrás de los signos vitales, qué es normal y cómo se miden correctamente.",
     aprenderas: ["Pulso y presión arterial", "Temperatura y respiración", "Rangos normales y técnica de medición"],
     horas: "~13 h", ritmo: "1 semana · 10 h por semana · 6 módulos", nivel: "Introductorio", idioma: "Inglés",
-    costo: "Gratis en modo oyente (si aparece al inscribirte) · certificado de pago",
+    costo: "Gratis en modo oyente (si aparece al inscribirme) · certificado de pago",
     valoracion: "97% lo recomienda · unos 440 mil inscritos",
     util: "Muy aplicado a equipos de monitoreo clínico." }
 ];
@@ -104,7 +104,7 @@ function crTarjetaExtra(c, i) {
   return `
   <article class="cr-card cr-${col} ${est}">
     <div class="cr-top"><span class="cr-etapa">${c.etapa >= 0 ? `ETAPA ${String(c.etapa + 1).padStart(2, "0")} · ${crEsc(ETAPAS[c.etapa].titulo)}` : "CURSO EXTRA"}</span>
-      <button class="cr-badge" data-estado-curso="${c.id}" title="Toca para cambiar el estado">${txt}</button></div>
+      <button class="cr-badge" data-estado-curso="${c.id}" title="Toco para cambiar el estado">${txt}</button></div>
     <h3>${crEsc(c.titulo)}</h3>
     <p class="cr-inst">🎓 ${crEsc(c.inst || "—")} · <b>${crEsc(c.plataforma)}</b></p>
     ${c.desc ? `<p class="cr-desc">${crEsc(c.desc)}</p>` : ""}
@@ -150,7 +150,7 @@ function crForm(c) {
       <label>Costo<input data-f="costo" value="${c.costo && c.costo !== "—" ? v("costo") : ""}" placeholder="Ej.: Gratis en modo oyente"></label>
       <label>Etapa del Roadmap<select data-f="etapa"><option value="-1">Sin etapa (extra)</option>${ETAPAS.map((e, i) => `<option value="${i}" ${sel(c.etapa, i)}>${String(i + 1).padStart(2, "0")} · ${crEsc(e.titulo)}</option>`).join("")}</select></label>
       <label>Estado<select data-f="estado">${["Por hacer", "En curso", "Completado"].map((n, i) => `<option value="${i}" ${sel(c.estado ?? 0, i)}>${n}</option>`).join("")}</select></label>
-      <label class="ancho">Notas (por qué lo quieres, qué esperas)<textarea data-f="notas" rows="2">${v("notas")}</textarea></label>
+      <label class="ancho">Notas (por qué lo quiero, qué espero)<textarea data-f="notas" rows="2">${v("notas")}</textarea></label>
     </div>
     <p class="cr-error" id="cr-error"></p>
     <div class="cr-acc"><button class="cr-btn verde" data-guardar-curso>Guardar curso</button><button class="cr-btn gris" data-cancelar-curso>Cancelar</button></div>
@@ -166,7 +166,7 @@ function crAbrirForm(c) {
 function crCerrarForm() { editando = null; crPoner("cr-form", ""); }
 function crGuardarForm() {
   const f = k => { const el = document.querySelector(`#cr-form [data-f="${k}"]`); return el ? el.value.trim() : ""; };
-  if (!f("titulo")) { const er = $("cr-error"); if (er) er.textContent = "Escribe el nombre del curso."; return; }
+  if (!f("titulo")) { const er = $("cr-error"); if (er) er.textContent = "Me falta el nombre del curso."; return; }
   let url = f("url");
   if (url && !/^https?:\/\//i.test(url)) url = "https://" + url;
   const datos = { titulo: f("titulo"), inst: f("inst"), plataforma: f("plataforma") || "—", url, desc: f("desc"), horas: f("horas") || "—",

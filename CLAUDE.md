@@ -21,8 +21,9 @@ Sitio estático (HTML + CSS + JavaScript puro, sin frameworks ni build) para org
 - Paleta: Keen Green #2B640E, Swamp Moss #6B843A, Amazon River Dolphin #E9B0BB (rosa claro), Shimmering Blush #D98695, Ripe Cherry #C25474, Berry Rossi #941B43. Fondo #F8F1F2. Rojo solo para alertas (#D9453C).
 - Fuente DM Sans. Bordes muy redondeados (22–32 px), botones tipo píldora.
 - Tarjetas de color con TODO el texto en blanco (por eso no se usan Dolphin ni Blush como fondo de tarjeta).
-- Cabecera verde con enlace "← Uni-Hub" arriba a la izquierda (clase `.volver`).
+- Cabecera (`.banner`) SIEMPRE en Swamp Moss #6B843A en todos los módulos, y `<meta name="theme-color" content="#6B843A">` en cada página. Enlace "← Uni-Hub" arriba a la izquierda (clase `.volver`). Ojo: en `roadmap/styles.css` la variable `--keen-green` vale #839958 (no es la de la paleta), así que ahí usar `var(--moss)`.
 - Zonas táctiles de al menos 40–44 px (iPad).
+- Textos en pantalla en **primera persona**, como si ella hablara: "Mis módulos", "Mi avance", "Me faltan 12 materias", "Toco una materia para…", errores tipo "Me falta el nombre de la materia." Los títulos en inglés usan "my". Excepción: el saludo "Hola Daniela". Los comentarios del código sí le hablan a ella (segunda persona).
 - Fechas y horas: no usar `<input type="date|time">` dentro de cuadrículas (en iPad se desbordan). Usar texto + selector invisible encima, o `<select>` de hora y minuto.
 
 ## Datos (localStorage)

@@ -143,7 +143,7 @@ function bloque(b, dia, desde, r) {
 
 function dibujarCuadricula(op, r) {
   if (!op) {
-    poner("cuadricula", `<div class="vacio">Todavía no tienes opciones para el ${buscarPeriodo(actual).nombre}.<button class="btn verde" data-nueva>＋ Crear Opción A</button></div>`);
+    poner("cuadricula", `<div class="vacio">Todavía no tengo opciones para el ${buscarPeriodo(actual).nombre}.<button class="btn verde" data-nueva>＋ Crear Opción A</button></div>`);
     return;
   }
   // De qué hora a qué hora se dibuja: al menos de 7 am a 6 pm, y más si alguna clase se sale
@@ -180,9 +180,9 @@ function dibujarLista(op, r) {
   // ordenadas por el primer día y luego por hora
   const orden = [...op.clases].sort((a, b) => Math.min(...a.dias) - Math.min(...b.dias) || a.ini - b.ini);
   poner("clases", `
-    <div class="section-head"><h2>Clases de «${esc(op.nombre)}»</h2><span>Toca una clase para editarla</span></div>
+    <div class="section-head"><h2>Clases de «${esc(op.nombre)}»</h2><span>Toco una clase para editarla</span></div>
     ${orden.length ? `<div class="lista">${orden.map(c => tarjetaClase(c, r)).join("")}</div>`
-      : `<p class="pista">Esta opción todavía no tiene clases. Toca «＋ Agregar clase».</p>`}`);
+      : `<p class="pista">Esta opción todavía no tiene clases. Toco «＋ Agregar clase» para empezar.</p>`}`);
 }
 
 function dibujar() {
@@ -213,7 +213,7 @@ function abrirForm(clase) {
   poner("form", `
     <h2>${b.id ? "Editar clase" : "Nueva clase"}</h2>
     <label class="campo ancho">Materia
-      <input id="f-materia" list="materias" value="${esc(b.materia)}" placeholder="Escribe para buscar…" autocomplete="off"></label>
+      <input id="f-materia" list="materias" value="${esc(b.materia)}" placeholder="Escribo para buscar…" autocomplete="off"></label>
     <label class="campo ancho">Profesor(a)
       <input id="f-profesor" value="${esc(b.profesor)}" placeholder="Opcional"></label>
     <div class="campo ancho">Modalidad
@@ -251,8 +251,8 @@ function guardarForm() {
   b.aula = $("f-aula").value.trim();
   b.notas = $("f-notas").value.trim();
   b.ini = leerHora("ini"); b.fin = leerHora("fin");
-  const error = !b.materia ? "Escribe el nombre de la materia."
-    : !b.dias.length ? "Elige al menos un día."
+  const error = !b.materia ? "Me falta el nombre de la materia."
+    : !b.dias.length ? "Me falta elegir al menos un día."
     : b.fin <= b.ini ? "La hora de fin tiene que ser después de la de inicio." : "";
   if (error) { texto("f-error", error); return; }
   b.dias.sort((x, y) => x - y);

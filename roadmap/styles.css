@@ -25,7 +25,7 @@ body {
 
 /* ===== BARRA SUPERIOR ===== */
 .banner {
-  background: var(--keen-green);
+  background: var(--moss);   /* el mismo tono en todos los módulos */
   color: #fff;
   border-radius: 32px;
   padding: 18px 26px;
@@ -78,7 +78,7 @@ body {
 .bar {
   height: 10px;
   border-radius: 999px;
-  background: var(--moss);
+  background: rgba(255, 255, 255, 0.3);   /* se ve sobre el fondo moss de la barra */
   overflow: hidden;
 }
 .bar-fill {
