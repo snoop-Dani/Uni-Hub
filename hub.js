@@ -141,6 +141,16 @@ const MODULOS = [
       if (!r) return "Aún sin revisar mis requisitos";
       const h = String(Math.round(r.horas * 100) / 100).replace(".", ",");
       return `Voy ${r.pct} % · TCU ${h} de ${String(r.meta).replace(".", ",")} h · ${r.cumplidos} de ${r.total} requisitos cumplidos`;
+    } },
+  { icono: "💛", titulo: "Mis razones", color: "berry", url: "razones/",
+    desc: "Para cuando sienta que no puedo: por quién lo hago, mis metas, mis razones y todo lo que ya logré.",
+    datos: () => {
+      const db = leer("razones-db"), personas = db && Array.isArray(db.personas) ? db.personas.map(p => p.nombre) : [];
+      const metas = db && Array.isArray(db.metas) ? db.metas.filter(m => !m.logrado).length : 0;
+      if (!personas.length && !metas) return "Agrego a las personas y razones que me inspiran";
+      // "Mamá, Papá y Sofi" (máximo 3 nombres)
+      const nombres = personas.length > 3 ? personas.slice(0, 3).join(", ") + "…" : personas.length > 1 ? personas.slice(0, -1).join(", ") + " y " + personas[personas.length - 1] : personas.join("");
+      return [nombres && `💛 Lo hago por ${nombres}`, metas && `${metas} ${metas === 1 ? "meta" : "metas"} por cumplir`].filter(Boolean).join(" · ");
     } }
 ];
 
@@ -163,7 +173,7 @@ function dibujar() {
 
 // ---------- Respaldo de mis datos ----------
 // Todo lo que guardan los módulos vive en este navegador. Aquí lo descargo en un archivo .json y lo puedo recuperar.
-const PREFIJOS = ["roadmap-", "carrera-", "horarios-", "notas-", "entregas-", "estudio-", "pagos-", "graduacion-"];   // si agregas un módulo, pon aquí su prefijo
+const PREFIJOS = ["roadmap-", "carrera-", "horarios-", "notas-", "entregas-", "estudio-", "pagos-", "graduacion-", "razones-"];   // si agregas un módulo, pon aquí su prefijo
 const ULTIMO = "unihub-ultimo-respaldo";                             // fecha del último respaldo descargado
 const ANTES = "unihub-antes-de-restaurar";                           // copia de seguridad para "Deshacer"
 const esMio = clave => PREFIJOS.some(p => clave.startsWith(p));

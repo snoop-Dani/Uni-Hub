@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis razones · Uni-Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="apple-touch-icon" href="../icon.png">
+  <meta name="theme-color" content="#6B843A">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="razones.css?v=1">
+</head>
+<body>
+
+  <header class="banner">
+    <span class="app-title"><a class="volver" href="../">← Uni-Hub</a> · MIS RAZONES</span>
+    <div class="banner-main">
+      <div>
+        <h1>Mis razones 💛</h1>
+        <p>Por quién lo hago, lo que quiero lograr y lo que ya logré</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Botón grande para los días difíciles -->
+    <button class="animo-btn" data-animo>
+      <span class="a-icono">💛</span>
+      <span><b>Necesito ánimo</b><small>Cuando sienta que no puedo, toco aquí</small></span>
+    </button>
+
+    <section class="panel" id="personas"></section>
+    <div class="columnas">
+      <section class="panel" id="metas"></section>
+      <section class="panel" id="razones"></section>
+    </div>
+    <div class="columnas">
+      <section class="panel" id="frases"></section>
+      <section class="panel" id="logros"></section>
+    </div>
+  </main>
+
+  <!-- Pantalla de ánimo (aparece encima) -->
+  <div class="animo" id="animo" hidden></div>
+
+  <!-- Formularios (aparecen encima) -->
+  <div class="hoja-fondo" id="hoja" hidden>
+    <form class="hoja" id="form" novalidate></form>
+  </div>
+  <input type="file" id="f-archivo" accept="image/*" hidden>
+
+  <script src="razones.js?v=1"></script>
+</body>
+</html>
