@@ -63,6 +63,20 @@ function resumenPagos() {
 }
 const enDias = d => d === 0 ? "hoy" : d === 1 ? "mañana" : `en ${d} días`;
 
+// Lee lo que guarda Graduación (y el avance de Mi carrera): % general, horas de TCU y requisitos cumplidos
+function resumenGraduacion() {
+  const db = leer("graduacion-db"), c = leer("carrera-resumen");
+  if (!db || !Array.isArray(db.requisitos)) return null;
+  const tcu = db.tcu || {}, horas = (tcu.horas || []).reduce((s, h) => s + (h.horas || 0), 0), meta = tcu.meta || 150;
+  const frac = r => r.tipo === "materias" ? (c && c.total ? Math.min(1, c.n / c.total) : 0)   // misma cuenta que graduacion.js
+    : r.tipo === "tcu" ? Math.min(1, horas / meta)
+    : r.tipo === "check" ? ({ pendiente: 0, proceso: 0.5, aprobado: 1 }[r.estado] || 0)
+    : r.meta ? Math.min(1, (r.lleva || 0) / r.meta) : null;
+  const fs = db.requisitos.map(frac), conMeta = fs.filter(f => f !== null);
+  return { pct: conMeta.length ? Math.round(100 * conMeta.reduce((s, f) => s + f, 0) / conMeta.length) : 0,
+    cumplidos: fs.filter(f => f === 1).length, total: fs.length, horas, meta };
+}
+
 // ---------- Tus módulos ----------
 // Para añadir otro: copia un bloque, cambia los textos y pon la carpeta en "url" (por ejemplo "notas/")
 const MODULOS = [
@@ -119,6 +133,14 @@ const MODULOS = [
       partes.push(r.prox ? `próximo: ${r.moneda}${r.prox.monto.toLocaleString("es-CR", { maximumFractionDigits: 2 })} (${enDias(r.dias(r.prox.fecha))})` : "sin pagos pendientes ✓");
       if (r.fecha) partes.push(`📌 ${r.fecha.nombre} ${enDias(r.dias(r.fecha.fecha))}`);
       return partes.join(" · ");
+    } },
+  { icono: "🎓", titulo: "Graduación", color: "keen", url: "graduacion/",
+    desc: "Sigo mis requisitos para graduarme: materias, horas de TCU, inglés B2, sellos verdes y más.",
+    datos: () => {
+      const r = resumenGraduacion();
+      if (!r) return "Aún sin revisar mis requisitos";
+      const h = String(Math.round(r.horas * 100) / 100).replace(".", ",");
+      return `Voy ${r.pct} % · TCU ${h} de ${String(r.meta).replace(".", ",")} h · ${r.cumplidos} de ${r.total} requisitos cumplidos`;
     } }
 ];
 
@@ -141,7 +163,7 @@ function dibujar() {
 
 // ---------- Respaldo de mis datos ----------
 // Todo lo que guardan los módulos vive en este navegador. Aquí lo descargo en un archivo .json y lo puedo recuperar.
-const PREFIJOS = ["roadmap-", "carrera-", "horarios-", "notas-", "entregas-", "estudio-", "pagos-"];   // si agregas un módulo, pon aquí su prefijo
+const PREFIJOS = ["roadmap-", "carrera-", "horarios-", "notas-", "entregas-", "estudio-", "pagos-", "graduacion-"];   // si agregas un módulo, pon aquí su prefijo
 const ULTIMO = "unihub-ultimo-respaldo";                             // fecha del último respaldo descargado
 const ANTES = "unihub-antes-de-restaurar";                           // copia de seguridad para "Deshacer"
 const esMio = clave => PREFIJOS.some(p => clave.startsWith(p));
