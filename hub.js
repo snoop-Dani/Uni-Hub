@@ -10,6 +10,21 @@ function resumenRoadmap() {
   return { n, pct: Math.round(100 * n / TOTAL_ROADMAP), empresas: Array.isArray(apps) ? apps.length : 0 };
 }
 
+// Lee lo que guarda Entregas: pendientes atrasadas, de esta semana y la próxima
+function resumenEntregas() {
+  const db = leer("entregas-db"), items = db && Array.isArray(db.items) ? db.items.filter(e => !e.hecha && e.fecha) : [];
+  const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+  const dias = f => { const [a, m, d] = f.split("-").map(Number); return Math.round((new Date(a, m - 1, d) - hoy) / 86400000); };
+  const finSemana = (7 - hoy.getDay()) % 7;   // días que faltan para el domingo
+  const prox = items.filter(e => dias(e.fecha) >= 0).sort((a, b) => (a.fecha + (a.hora || "99")).localeCompare(b.fecha + (b.hora || "99")))[0];
+  return {
+    total: items.length,
+    atrasadas: items.filter(e => dias(e.fecha) < 0).length,
+    semana: items.filter(e => dias(e.fecha) >= 0 && dias(e.fecha) <= finSemana).length,
+    prox, enDias: prox ? dias(prox.fecha) : null
+  };
+}
+
 // ---------- Tus módulos ----------
 // Para añadir otro: copia un bloque, cambia los textos y pon la carpeta en "url" (por ejemplo "notas/")
 const MODULOS = [
@@ -33,6 +48,17 @@ const MODULOS = [
       if (!r || !r.materias) return r ? `${r.periodo} · aún sin materias` : "Aún sin notas";
       const prom = r.promedio === null ? "sin notas aún" : `promedio ${String(r.promedio).replace(".", ",")}`;
       return `${r.periodo} · ${r.materias} ${r.materias === 1 ? "materia" : "materias"} · ${prom}${r.riesgo ? ` · ⚠ ${r.riesgo} en riesgo` : ""}`;
+    } },
+  { icono: "📅", titulo: "Entregas y exámenes", color: "berry", url: "entregas/",
+    desc: "Anoto tareas, reportes, quices y exámenes, y veo qué vence hoy, mañana y esta semana.",
+    datos: () => {
+      const r = resumenEntregas();
+      if (!r.total) return "Nada pendiente ✓";
+      const partes = [];
+      if (r.atrasadas) partes.push(`⚠ ${r.atrasadas} ${r.atrasadas === 1 ? "atrasada" : "atrasadas"}`);
+      partes.push(`${r.semana} esta semana`);
+      if (r.prox) partes.push(`próxima: ${r.prox.titulo} (${r.enDias === 0 ? "hoy" : r.enDias === 1 ? "mañana" : `en ${r.enDias} días`})`);
+      return partes.join(" · ");
     } }
 ];
 
@@ -55,7 +81,7 @@ function dibujar() {
 
 // ---------- Respaldo de mis datos ----------
 // Todo lo que guardan los módulos vive en este navegador. Aquí lo descargo en un archivo .json y lo puedo recuperar.
-const PREFIJOS = ["roadmap-", "carrera-", "horarios-", "notas-"];   // si agregas un módulo, pon aquí su prefijo
+const PREFIJOS = ["roadmap-", "carrera-", "horarios-", "notas-", "entregas-"];   // si agregas un módulo, pon aquí su prefijo
 const ULTIMO = "unihub-ultimo-respaldo";                             // fecha del último respaldo descargado
 const ANTES = "unihub-antes-de-restaurar";                           // copia de seguridad para "Deshacer"
 const esMio = clave => PREFIJOS.some(p => clave.startsWith(p));
@@ -98,7 +124,7 @@ function restaurarRespaldo(archivo) {
       try { JSON.parse(r.datos[k]); datos[k] = r.datos[k]; } catch (e) {}
     });
     const cuando = r.fecha && !isNaN(new Date(r.fecha)) ? fechaBonita(new Date(r.fecha)) : "fecha desconocida";
-    if (!confirm(`¿Restaurar el respaldo del ${cuando}?\n\nEsto reemplaza los datos de Roadmap, Mi carrera, Horarios y Mis notas en este dispositivo. Si me equivoco, puedo deshacerlo.`)) return;
+    if (!confirm(`¿Restaurar el respaldo del ${cuando}?\n\nEsto reemplaza los datos de todos mis módulos (Roadmap, Mi carrera, Horarios, Mis notas, Entregas…) en este dispositivo. Si me equivoco, puedo deshacerlo.`)) return;
     try {
       localStorage.setItem(ANTES, JSON.stringify(copiaActual()));
       reemplazarCon(datos);

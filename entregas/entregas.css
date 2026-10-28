@@ -1,0 +1,94 @@
+/* ===== PALETA ===== */
+:root {
+  --keen-green: #2B640E; --moss: #6B843A;
+  --dolphin: #E9B0BB; --blush: #D98695; --cherry: #C25474; --berry: #941B43;
+  --bg: #F8F1F2; --rojo: #D9453C; --linea: #F0E4E6; --r: 22px;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; padding: 12px; background: var(--bg); color: #262626; font-family: "DM Sans", system-ui, sans-serif; }
+body.sin-scroll { overflow: hidden; }   /* mientras el formulario está abierto */
+
+/* ===== CABECERA ===== */
+.banner { background: var(--moss); color: #fff; border-radius: 32px; padding: 18px 26px; display: grid; gap: 14px; }
+.app-title { font-size: 13px; font-weight: 700; letter-spacing: .08em; }
+.volver { color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.55); padding: 6px 2px; }
+.banner-main { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.banner h1 { margin: 0; font-size: clamp(26px, 4vw, 36px); }
+.banner p { margin: 4px 0 0; font-size: 13px; opacity: .85; }
+
+/* ===== DISPOSICIÓN ===== */
+main { display: grid; gap: 12px; margin-top: 12px; }
+.section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 10px 4px 8px; flex-wrap: wrap; }
+.section-head h2 { margin: 0; font-size: 20px; color: var(--keen-green); }
+.section-head.alerta h2 { color: var(--rojo); }
+.section-head span { font-size: 12px; color: #6b6b6b; }
+.pista { color: #6b6b6b; text-align: center; margin: 20px 0; }
+
+/* ===== BOTONES ===== */
+.btn { border: 0; border-radius: 999px; background: #eee; color: #555; font: inherit; font-size: 14px; font-weight: 700; min-height: 44px; padding: 0 16px; cursor: pointer; touch-action: manipulation; }
+.btn.verde { background: var(--keen-green); color: #fff; }
+.btn.blanco { background: #fff; color: var(--keen-green); font-size: 15px; padding: 0 20px; }
+.btn.peligro { color: var(--rojo); }
+.btn.chico { min-height: 40px; font-size: 13px; }
+
+/* ===== RESUMEN ===== */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.stat { border-radius: var(--r); padding: 12px 16px; color: #fff; display: grid; }
+.stat:nth-child(1) { background: var(--berry); } .stat:nth-child(2) { background: var(--keen-green); }
+.stat:nth-child(3) { background: var(--moss); }  .stat:nth-child(4) { background: var(--cherry); }
+.stat.alerta { background: var(--rojo); }
+.stat b { font-size: 28px; line-height: 1.1; }
+.stat span { font-size: 12px; font-weight: 700; opacity: .9; }
+
+/* ===== FILTRO POR MATERIA ===== */
+.filtros { display: flex; flex-wrap: wrap; gap: 6px; }
+.filtros:empty { display: none; }
+.fil { border: 0; border-radius: 999px; min-height: 40px; padding: 0 14px; background: #fff; color: var(--keen-green); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+.fil.on { background: var(--keen-green); color: #fff; }
+
+/* ===== TARJETAS (texto siempre blanco) ===== */
+.grupo { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; }
+.entrega { background: var(--cbg); color: #fff; border-radius: var(--r); display: flex; align-items: stretch; overflow: hidden; }
+.c-berry { --cbg: var(--berry); } .c-keen { --cbg: var(--keen-green); }
+.c-cherry { --cbg: var(--cherry); } .c-moss { --cbg: var(--moss); }
+.entrega.atrasada { --cbg: var(--rojo); }   /* rojo solo para lo atrasado */
+.entrega.hecha { opacity: .55; }
+.entrega.hecha .e-top b { text-decoration: line-through; text-decoration-color: rgba(255,255,255,.7); }
+.check { flex: none; width: 56px; border: 0; border-right: 1px solid rgba(255,255,255,.25); background: transparent; color: #fff; font: inherit; cursor: pointer; touch-action: manipulation; display: grid; place-items: center; }
+.check span { width: 30px; height: 30px; border-radius: 50%; border: 2px solid rgba(255,255,255,.8); display: grid; place-items: center; font-weight: 700; font-size: 16px; }
+.entrega.hecha .check span { background: #fff; color: var(--cbg); }
+.e-cuerpo { flex: 1; min-width: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: left; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; cursor: pointer; touch-action: manipulation; }
+.e-cuerpo:active { opacity: .85; }
+.e-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.e-top b { font-size: 15px; line-height: 1.3; }
+.cuando { flex: none; font-style: normal; font-size: 11px; font-weight: 700; background: rgba(255,255,255,.25); border-radius: 999px; padding: 3px 9px; white-space: nowrap; }
+.e-info { font-size: 12px; opacity: .92; }
+.e-notas { font-size: 12px; opacity: .85; white-space: pre-line; }
+
+/* ===== FORMULARIO (hoja encima) ===== */
+.hoja-fondo { position: fixed; inset: 0; z-index: 10; background: rgba(38,38,38,.45); display: grid; place-items: center; padding: 12px; }
+.hoja { background: #fff; border-radius: 28px; padding: 20px; width: min(560px, 100%); max-height: calc(100vh - 24px); overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hoja h2 { grid-column: 1 / -1; margin: 0; color: var(--keen-green); }
+.ancho { grid-column: 1 / -1; }
+.campo { display: grid; gap: 6px; align-content: start; font-size: 13px; font-weight: 700; color: #555; }   /* align-content: que no se estiren */
+.campo input, .campo textarea, .hora select { -webkit-appearance: none; appearance: none; width: 100%; min-height: 44px; font: inherit; font-size: 16px; font-weight: 400; color: #262626; border: 2px solid #EEDDE0; border-radius: 14px; padding: 10px 12px; background: var(--bg); }
+.hora { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.hora select { text-align: center; cursor: pointer; }
+.pildoras { display: flex; flex-wrap: wrap; gap: 6px; }
+.pil { border: 0; border-radius: 999px; min-height: 42px; padding: 0 14px; background: var(--bg); color: #555; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+.pil.on { background: var(--keen-green); color: #fff; }
+/* Fecha: texto bonito con el calendario del iPad invisible encima */
+.fecha-btn { position: relative; min-height: 44px; border: 2px solid #EEDDE0; border-radius: 14px; background: var(--bg); display: flex; align-items: center; padding: 0 12px; font-size: 16px; font-weight: 400; color: #262626; }
+.fecha-btn::after { content: "📅"; margin-left: auto; }
+.fecha-btn input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; border: 0; cursor: pointer; }
+.rapidos { display: flex; gap: 6px; flex-wrap: wrap; }
+.error { margin: 0; color: var(--rojo); font-size: 13px; font-weight: 700; }
+.error:empty { display: none; }
+.botones { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; }
+.botones .peligro { margin-right: auto; }
+
+@media (max-width: 600px) {
+  .stats { grid-template-columns: 1fr 1fr; }
+  .hoja { grid-template-columns: 1fr; }
+}

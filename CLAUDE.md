@@ -16,6 +16,7 @@ Sitio estático (HTML + CSS + JavaScript puro, sin frameworks ni build) para org
 - `carrera/` → "Mi carrera": `index.html`, `carrera.css`, `malla.js` (lista `PLAN_BASE`: 16 cuatrimestres, 70 materias con laboratorios separados), `carrera.js` (gráfico circular, modo reordenar). Para agregar materias se cambia solo `malla.js`: `completarPlan()` en carrera.js las añade al orden guardado sin perderlo. Nunca cambiar ids existentes (son las claves de `carrera-aprobadas`). Materias sin código conocido usan ids en palabras (`biomecanica`, `lab-biomecanica`, `tcu`, `seminario-graduacion`).
 - `horarios/` → "Horarios": `index.html`, `horarios.css`, `horarios.js` (opciones por cuatrimestre, cuadrícula semanal, choques). Carga `../carrera/malla.js` para los cuatrimestres y el autocompletado.
 - `notas/` → "Mis notas": `index.html`, `notas.css`, `notas.js`. Por cuatrimestre (por defecto el que está en curso): materias con evaluaciones (nombre, %, nota; nota vacía = pendiente), promedio actual y cuánto necesita en lo que falta para su meta (70 por defecto, nota mínima de ULACIT). Sugiere materias de su horario ★ (`horarios-db`) y de su malla (`carrera-plan`). También carga `../carrera/malla.js`.
+- `entregas/` → "Entregas y exámenes": `index.html`, `entregas.css`, `entregas.js`. Lista agrupada (Atrasadas en rojo, Hoy, Mañana, Esta semana hasta el domingo, Más adelante, Hechas plegable), ✓ para marcar hecha, filtro por materia. Fecha con texto + `<input type="date">` invisible encima; hora con `<select>` ("Sin hora" o hora/minuto, incluye :59). Fechas guardadas como "AAAA-MM-DD" (sin zona horaria).
 - Íconos en la raíz: `favicon.png`, `icon.png` (ícono de iPad / apple-touch-icon). Desde las subcarpetas se enlazan con `../`.
 
 ## Diseño (mantenerlo igual en todo módulo)
@@ -33,8 +34,9 @@ El navegador guarda por sitio web, no por carpeta, y cada módulo usa su propio 
 - `carrera-aprobadas`, `carrera-plan`, `carrera-resumen` (el hub lee este último)
 - `horarios-db` ({periodos: {"I-2027": {opciones, elegida, activa}}}), `horarios-resumen` ({periodo, opciones, elegida} del próximo cuatrimestre; lo lee el hub). Horarios también lee `carrera-plan` para sugerir primero las materias de ese cuatrimestre.
 - `notas-db` ({periodos: {"III-2026": {materias: [{id, nombre, meta, evals: [{id, nombre, peso, nota}]}]}}}), `notas-resumen` ({periodo, materias, promedio, riesgo} del cuatrimestre en curso; lo lee el hub).
+- `entregas-db` ({items: [{id, titulo, materia, tipo, fecha, hora, notas, hecha, hechaEn}]}). Sin archivo de resumen: el hub calcula directo de `entregas-db` (atrasadas, esta semana, próxima) para que no quede desactualizado al cambiar el día.
 - El hub también lee `roadmap-hechas` y `roadmap-apps` para mostrar su avance.
-- **Respaldo** (sección "Mis datos" en el hub, `hub.js`): descarga/restaura todas las claves cuyo prefijo está en `PREFIJOS` (`roadmap-`, `carrera-`, `horarios-`, `notas-`). **Al crear un módulo nuevo, agregar su prefijo a `PREFIJOS`** o sus datos no entrarán en el respaldo. Claves propias del respaldo (no se respaldan): `unihub-ultimo-respaldo` (fecha, recordatorio a los 14 días) y `unihub-antes-de-restaurar` (copia para "Deshacer la restauración").
+- **Respaldo** (sección "Mis datos" en el hub, `hub.js`): descarga/restaura todas las claves cuyo prefijo está en `PREFIJOS` (`roadmap-`, `carrera-`, `horarios-`, `notas-`, `entregas-`). **Al crear un módulo nuevo, agregar su prefijo a `PREFIJOS`** o sus datos no entrarán en el respaldo. Claves propias del respaldo (no se respaldan): `unihub-ultimo-respaldo` (fecha, recordatorio a los 14 días) y `unihub-antes-de-restaurar` (copia para "Deshacer la restauración").
 - En localStorage, borrar los datos de Safari borra todo: recordarle descargar respaldo.
 
 ## Lecciones aprendidas (errores que ya pasaron)
@@ -46,6 +48,6 @@ El navegador guarda por sitio web, no por carpeta, y cada módulo usa su propio 
 
 ## Pendientes
 (Hechos el 28 oct 2026: enlace "← Uni-Hub" en el roadmap, módulo `horarios/`, y se agregaron a la malla Elementos de biomecánica + lab (II 2028), TCU (III 2029) y Seminario de graduación (II 2030). Inglés I y II no: convalidados o no aplican.)
-(También hechos: módulo `notas/` y respaldo exportar/importar en el hub.)
+(También hechos: módulos `notas/` y `entregas/`, y respaldo exportar/importar en el hub.)
 1. Cuando ella los tenga, poner los códigos reales de esas 4 materias como nota (no cambiar sus ids).
-2. Ideas de módulos que le propuse: Entregas y exámenes, Requisitos de graduación (checklist + horas de TCU), Sesiones de estudio, Portafolio de proyectos, Matrícula y pagos. La lectura automática de las guías de horario de ULACIT se descartó (la página tiene protección de Cloudflare).
+2. Ideas de módulos que le propuse: Requisitos de graduación (checklist + horas de TCU), Sesiones de estudio, Portafolio de proyectos, Matrícula y pagos. La lectura automática de las guías de horario de ULACIT se descartó (la página tiene protección de Cloudflare).
