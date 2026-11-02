@@ -3,28 +3,28 @@ const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "o
 const ULTIMO_MES = 26;   // el calendario va de oct 2026 (0) a dic 2028 (26)
 
 const ETAPAS = [
-  { icono: "🧭", color: "berry", titulo: "Define my direction", fechas: "Oct 2026–Mar 2027",
+  { icono: "🧭", color: "berry", titulo: "Define my direction", fechas: "Abr–May 2028",
     objetivo: "Saber exactamente qué buscan las empresas antes de empezar a prepararme.",
     descripcion: "Reviso vacantes reales, comparo herramientas y busco los requisitos de ULACIT." },
-  { icono: "📊", color: "dolphin", titulo: "Build my data skills", fechas: "Ene–Jun 2027",
+  { icono: "📊", color: "dolphin", titulo: "Build my data skills", fechas: "May–Jun 2028",
     objetivo: "Tener una base sólida en análisis de datos.",
     descripcion: "Excel a nivel funcional y primeros pasos en R, con 2–3 horas por semana." },
-  { icono: "🧬", color: "keen", titulo: "Biomedical foundations", fechas: "Abr–Sep 2027",
+  { icono: "🧬", color: "keen", titulo: "Biomedical foundations", fechas: "Jun–Jul 2028",
     objetivo: "Conectar el análisis de datos con la ingeniería biomédica.",
     descripcion: "Curso de introducción a la ingeniería biomédica y práctica en R: importar, limpiar y graficar datos." },
-  { icono: "🔬", color: "cherry", titulo: "Build my project", fechas: "Jul–Dic 2027", principal: true,
+  { icono: "🔬", color: "cherry", titulo: "Build my project", fechas: "Jul–Ago 2028", principal: true,
     objetivo: "Un proyecto que pueda enseñar en entrevistas.",
     descripcion: "Rehacer el análisis de lotes de catéteres en R, con informe de 1–2 páginas y código en GitHub." },
-  { icono: "🫀", color: "blush", titulo: "Physiology + Technical English", fechas: "Oct 2027–Mar 2028",
+  { icono: "🫀", color: "blush", titulo: "Physiology + Technical English", fechas: "Ago–Sep 2028",
     objetivo: "Hablar el idioma de la industria.",
     descripcion: "Fisiología, signos vitales y lectura de ofertas y documentación de dispositivos en inglés." },
-  { icono: "💼", color: "moss", titulo: "Build my professional profile", fechas: "Ene–Jun 2028",
+  { icono: "💼", color: "moss", titulo: "Build my professional profile", fechas: "Sep–Oct 2028",
     objetivo: "Verme lista para las empresas.",
     descripcion: "Actualizar CV y LinkedIn, armar mi lista de empresas y activar alertas de vacantes." },
-  { icono: "🤝", color: "dolphin", titulo: "Networking + Interviews", fechas: "Abr–Sep 2028",
+  { icono: "🤝", color: "dolphin", titulo: "Networking + Interviews", fechas: "Oct–Nov 2028",
     objetivo: "Llegar a las entrevistas con contactos y práctica.",
     descripcion: "Conectar con alumni y profesionales, y preparar mi pitch de 2–3 minutos en inglés." },
-  { icono: "🚀", color: "keen", titulo: "Application season", fechas: "Oct–Dic 2028",
+  { icono: "🚀", color: "keen", titulo: "Application season", fechas: "Dic 2028",
     objetivo: "Postular a varias pasantías a la vez.",
     descripcion: "Personalizar el CV, registrar cada aplicación y dar seguimiento." }
 ];
@@ -62,8 +62,8 @@ const DETALLES = [
 
 // Rango de fechas de cada etapa (para pintar el calendario)
 const RANGOS = [
-  ["2026-10-01", "2027-03-31"], ["2027-01-01", "2027-06-30"], ["2027-04-01", "2027-09-30"], ["2027-07-01", "2027-12-31"],
-  ["2027-10-01", "2028-03-31"], ["2028-01-01", "2028-06-30"], ["2028-04-01", "2028-09-30"], ["2028-10-01", "2028-12-31"]
+  ["2028-04-01", "2028-05-31"], ["2028-05-01", "2028-06-30"], ["2028-06-01", "2028-07-31"], ["2028-07-01", "2028-08-31"],
+  ["2028-08-01", "2028-09-30"], ["2028-09-01", "2028-10-31"], ["2028-10-01", "2028-11-30"], ["2028-12-01", "2028-12-31"]
 ];
 const COLORES = ["berry", "keen", "cherry", "moss", "moss", "berry", "keen", "cherry"];  // color de cada tarjeta, por posición
 
@@ -290,7 +290,7 @@ function dibujarRoadmap() {
   $("roadmap-lista").innerHTML = `
     <div class="tl-extremo"><span class="tl-punto"></span>Hoy · ${fechaCorta(hoyISO())}</div>
     ${etapas}
-    <div class="tl-extremo"><span class="tl-punto fin">🚀</span>Lista para aplicar · Oct–Dic 2028</div>`;
+    <div class="tl-extremo"><span class="tl-punto fin">🚀</span>Lista para aplicar · Dic 2028</div>`;
   recien = null;
 }
 
