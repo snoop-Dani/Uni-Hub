@@ -3,7 +3,7 @@
 const CURSOS = [
   { titulo: "Excel Skills for Business: Essentials", inst: "Macquarie University", plataforma: "Coursera",
     url: "https://www.coursera.org/learn/excel-essentials",
-    etapa: 1, tarea: [1, 0], tipo: "Herramienta",
+    id: "excel-essentials", etapa: 1, vieja: "1-0", tipo: "Herramienta",
     desc: "El primer curso de la especialización de Excel de Macquarie. Parte desde cero y me lleva a usar Excel con soltura para resolver problemas reales de negocio.",
     aprenderas: ["Interfaz, fórmulas y funciones", "Dar formato profesional a una hoja", "Crear y personalizar gráficos"],
     horas: "~26 h", ritmo: "3 semanas · 10 h por semana", nivel: "Principiante", idioma: "Inglés",
@@ -12,7 +12,7 @@ const CURSOS = [
     util: "Base para registros, control de calidad y seguimiento de datos en cualquier área." },
   { titulo: "R Programming", inst: "Johns Hopkins University", plataforma: "Coursera",
     url: "https://www.coursera.org/learn/r-programming",
-    etapa: 1, tarea: [1, 1], tipo: "Herramienta",
+    id: "r-programming", etapa: 1, vieja: "1-1", tipo: "Herramienta",
     desc: "Parte de la especialización de Ciencia de Datos de Johns Hopkins. Enseña el lenguaje R desde sus conceptos de programación hasta herramientas para depurar y medir el rendimiento del código.",
     aprenderas: ["Conceptos del lenguaje R", "Instalar y configurar R", "Funciones de ciclo y depuración"],
     horas: "~57 h", ritmo: "6 semanas · 10 h por semana", nivel: "Intermedio", idioma: "Inglés",
@@ -21,7 +21,7 @@ const CURSOS = [
     util: "El más pesado de la lista: lo empiezo temprano. Es la base de mi proyecto con datos." },
   { titulo: "Introduction to Biomedical Engineering", inst: "Peter the Great St. Petersburg Polytechnic University (con apoyo de UCL)", plataforma: "Coursera",
     url: "https://www.coursera.org/learn/bioengineering",
-    etapa: 2, tarea: [2, 0], tipo: "Fundamentos biomédicos",
+    id: "intro-biomedica", etapa: -1, vieja: "2-0", tipo: "Fundamentos biomédicos",
     desc: "Curso práctico de ingeniería biomédica: cómo se capturan y procesan señales del cuerpo y cómo se diseñan sistemas como las prótesis biónicas. Pide solo matemáticas y física de nivel universitario.",
     aprenderas: ["Electrónica: amplificadores y filtros", "Teoría de control", "Arduino y MATLAB"],
     horas: "~18–40 h", ritmo: "4 semanas · 5 a 10 h por semana", nivel: "Principiante", idioma: "Inglés (con subtítulos en español)",
@@ -30,7 +30,7 @@ const CURSOS = [
     util: "Incluye prácticas con MATLAB: al inscribirme, reviso qué necesito para hacerlas." },
   { titulo: "Introductory Human Physiology", inst: "Duke University", plataforma: "Coursera",
     url: "https://www.coursera.org/learn/physiology",
-    etapa: 4, tarea: [4, 0], tipo: "Fundamentos biomédicos",
+    id: "fisiologia", etapa: -1, vieja: "4-0", tipo: "Fundamentos biomédicos",
     desc: "Recorre cómo funcionan los principales sistemas del cuerpo humano y cómo se integran para mantener la vida. No requiere experiencia previa.",
     aprenderas: ["Homeostasis y sistema endocrino", "Sistema nervioso y muscular", "Cardiovascular, respiratorio y digestivo"],
     horas: "~34 h", ritmo: "3 semanas · 10 h por semana · 10 módulos", nivel: "Principiante", idioma: "Inglés",
@@ -39,7 +39,7 @@ const CURSOS = [
     util: "Me da el lenguaje del cuerpo para entender lo que mide cualquier dispositivo médico." },
   { titulo: "Vital Signs: Understanding What the Body Is Telling Us", inst: "University of Pennsylvania", plataforma: "Coursera",
     url: "https://www.coursera.org/learn/vital-signs",
-    etapa: 4, tarea: [4, 1], tipo: "Fundamentos biomédicos",
+    id: "signos-vitales", etapa: -1, vieja: "4-1", tipo: "Fundamentos biomédicos",
     desc: "Explica la anatomía y la fisiología detrás de los signos vitales, qué es normal y cómo se miden correctamente.",
     aprenderas: ["Pulso y presión arterial", "Temperatura y respiración", "Rangos normales y técnica de medición"],
     horas: "~13 h", ritmo: "1 semana · 10 h por semana · 6 módulos", nivel: "Introductorio", idioma: "Inglés",
@@ -47,10 +47,6 @@ const CURSOS = [
     valoracion: "97% lo recomienda · unos 440 mil inscritos",
     util: "Muy aplicado a equipos de monitoreo clínico." }
 ];
-
-// Mantiene el Roadmap coherente: el "tiempo estimado" de cada tarea sale de aquí
-CURSOS.forEach(c => { if (typeof DETALLES !== "undefined" && DETALLES[c.tarea[0]] && DETALLES[c.tarea[0]][c.tarea[1]]) DETALLES[c.tarea[0]][c.tarea[1]][1] = c.horas; });
-if (typeof dibujarRoadmap === "function") dibujarRoadmap();
 
 const crEsc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 const crPoner = (id, html) => { const el = $(id); if (el) el.innerHTML = html; };
@@ -65,20 +61,34 @@ if (!Array.isArray(extras)) extras = [];
 const crGuardar = () => { try { localStorage.setItem("roadmap-cursos-extra", JSON.stringify(extras)); } catch (e) {} };
 let editando = null;                         // id del curso que se está editando (null = curso nuevo)
 
-// ---------- Estado de los cursos del Roadmap (sale de sus tareas) ----------
-function crEstado(c) {
-  if (hechas[`${c.tarea[0]}-${c.tarea[1]}`]) return ["hecho", "✓ Completado"];
-  const cur = typeof tareaActual === "function" ? tareaActual() : null;
-  if (cur && cur[0] === c.tarea[0] && cur[1] === c.tarea[1]) return ["actual", "● En curso"];
-  return ["pendiente", "Por hacer"];
-}
+// Solo una vez: los cursos que agregaste apuntaban a las 8 etapas viejas, así que pasan a "Curso extra"
+try {
+  if (!localStorage.getItem("roadmap-fases-migrado")) {
+    extras.forEach(c => { c.etapa = -1; });
+    crGuardar();
+    localStorage.setItem("roadmap-fases-migrado", "1");
+  }
+} catch (e) {}
+
+// ---------- Estado de los 5 cursos fijos: 0 = por hacer, 1 = en curso, 2 = completado ----------
+// Ya no sale de las tareas: se cambia tocando la etiqueta y se guarda en "roadmap-cursos-estado".
+// Si todavía no lo has tocado, respeta lo que habías marcado en el roadmap anterior ("roadmap-hechas").
+let estadosCursos = {}, hechasViejas = {};
+try { estadosCursos = JSON.parse(localStorage.getItem("roadmap-cursos-estado")) || {}; } catch (e) {}
+try { hechasViejas = JSON.parse(localStorage.getItem("roadmap-hechas")) || {}; } catch (e) {}
+const crEstadoNum = c => estadosCursos[c.id] !== undefined ? estadosCursos[c.id] : (hechasViejas[c.vieja] ? 2 : 0);
+function crEstado(c) { return [["pendiente", "Por hacer"], ["actual", "● En curso"], ["hecho", "✓ Completado"]][crEstadoNum(c)]; }
+
+// "FASE 02 · Habilidades clave" o "CURSO EXTRA" si el curso no pertenece a ninguna fase
+const crEtiqueta = c => c.etapa >= 0 && FASES[c.etapa] ? `FASE ${String(c.etapa + 1).padStart(2, "0")} · ${crEsc(FASES[c.etapa].titulo)}` : "CURSO EXTRA";
+const crColor = (c, i) => c.etapa >= 0 && FASES[c.etapa] ? FASES[c.etapa].color : CR_COLORES[i % CR_COLORES.length];
 
 // ---------- Tarjetas ----------
-function crTarjeta(c) {
-  const [est, txt] = crEstado(c), col = (typeof COLORES !== "undefined" && COLORES[c.etapa]) || "keen";
+function crTarjeta(c, i) {
+  const [est, txt] = crEstado(c);
   return `
-  <article class="cr-card cr-${col} ${est}">
-    <div class="cr-top"><span class="cr-etapa">ETAPA ${String(c.etapa + 1).padStart(2, "0")} · ${crEsc(ETAPAS[c.etapa].titulo)}</span><span class="cr-badge">${txt}</span></div>
+  <article class="cr-card cr-${crColor(c, i)} ${est}">
+    <div class="cr-top"><span class="cr-etapa">${crEtiqueta(c)}</span><button class="cr-badge" data-estado-fijo="${c.id}" title="Toco para cambiar el estado">${txt}</button></div>
     <h3>${crEsc(c.titulo)}</h3>
     <p class="cr-inst">🎓 ${crEsc(c.inst)} · <b>${crEsc(c.plataforma)}</b></p>
     <p class="cr-desc">${crEsc(c.desc)}</p>
@@ -93,17 +103,17 @@ function crTarjeta(c) {
     <p class="cr-util">💡 ${crEsc(c.util)}</p>
     <div class="cr-acc">
       <a class="cr-btn" href="${crEsc(c.url)}" target="_blank" rel="noopener">Ir al curso ↗</a>
-      <button class="cr-btn suave" data-etapa-ir="${c.etapa}">Ver en Roadmap</button>
+      ${c.etapa >= 0 ? `<button class="cr-btn suave" data-etapa-ir="${c.etapa}">Ver en Roadmap</button>` : ""}
     </div>
   </article>`;
 }
 
 function crTarjetaExtra(c, i) {
-  const col = c.etapa >= 0 && typeof COLORES !== "undefined" ? COLORES[c.etapa] : CR_COLORES[i % 4];
+  const col = crColor(c, i);
   const est = ["pendiente", "actual", "hecho"][c.estado] || "pendiente", txt = ["Por hacer", "● En curso", "✓ Completado"][c.estado] || "Por hacer";
   return `
   <article class="cr-card cr-${col} ${est}">
-    <div class="cr-top"><span class="cr-etapa">${c.etapa >= 0 ? `ETAPA ${String(c.etapa + 1).padStart(2, "0")} · ${crEsc(ETAPAS[c.etapa].titulo)}` : "CURSO EXTRA"}</span>
+    <div class="cr-top"><span class="cr-etapa">${crEtiqueta(c)}</span>
       <button class="cr-badge" data-estado-curso="${c.id}" title="Toco para cambiar el estado">${txt}</button></div>
     <h3>${crEsc(c.titulo)}</h3>
     <p class="cr-inst">🎓 ${crEsc(c.inst || "—")} · <b>${crEsc(c.plataforma)}</b></p>
@@ -148,7 +158,7 @@ function crForm(c) {
       <label>Nivel<select data-f="nivel">${["Principiante", "Intermedio", "Avanzado"].map(n => `<option ${sel(c.nivel, n)}>${n}</option>`).join("")}</select></label>
       <label>Idioma<input data-f="idioma" value="${c.idioma && c.idioma !== "—" ? v("idioma") : ""}" placeholder="Ej.: Inglés"></label>
       <label>Costo<input data-f="costo" value="${c.costo && c.costo !== "—" ? v("costo") : ""}" placeholder="Ej.: Gratis en modo oyente"></label>
-      <label>Etapa del Roadmap<select data-f="etapa"><option value="-1">Sin etapa (extra)</option>${ETAPAS.map((e, i) => `<option value="${i}" ${sel(c.etapa, i)}>${String(i + 1).padStart(2, "0")} · ${crEsc(e.titulo)}</option>`).join("")}</select></label>
+      <label>Fase del Roadmap<select data-f="etapa"><option value="-1">Sin fase (extra)</option>${FASES.map((e, i) => `<option value="${i}" ${sel(c.etapa, i)}>${String(i + 1).padStart(2, "0")} · ${crEsc(e.titulo)}</option>`).join("")}</select></label>
       <label>Estado<select data-f="estado">${["Por hacer", "En curso", "Completado"].map((n, i) => `<option value="${i}" ${sel(c.estado ?? 0, i)}>${n}</option>`).join("")}</select></label>
       <label class="ancho">Notas (por qué lo quiero, qué espero)<textarea data-f="notas" rows="2">${v("notas")}</textarea></label>
     </div>
@@ -247,6 +257,11 @@ if (crVista) crVista.addEventListener("click", ev => {
   else if ((b = t.closest("[data-editar-curso]"))) crAbrirForm(extras.find(x => x.id === b.dataset.editarCurso));
   else if ((b = t.closest("[data-borrar-curso]"))) {
     if (confirm("¿Quitar este curso de la lista?")) { extras = extras.filter(x => x.id !== b.dataset.borrarCurso); crGuardar(); dibujarCursos(); }
+  } else if ((b = t.closest("[data-estado-fijo]"))) {
+    const c = CURSOS.find(x => x.id === b.dataset.estadoFijo);
+    estadosCursos[c.id] = (crEstadoNum(c) + 1) % 3;
+    try { localStorage.setItem("roadmap-cursos-estado", JSON.stringify(estadosCursos)); } catch (e) {}
+    dibujarCursos();
   } else if ((b = t.closest("[data-estado-curso]"))) {
     const c = extras.find(x => x.id === b.dataset.estadoCurso);
     if (c) { c.estado = ((c.estado || 0) + 1) % 3; crGuardar(); dibujarCursos(); }

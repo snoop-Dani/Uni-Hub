@@ -56,7 +56,7 @@ function logros() {
   if (hechas) out.push(`📅 Ya entregué ${hechas} ${hechas === 1 ? "tarea o examen" : "tareas y exámenes"}.`);
   const g = leerJSON("graduacion-db"), tcu = g && g.tcu && Array.isArray(g.tcu.horas) ? g.tcu.horas.reduce((s, x) => s + (x.horas || 0), 0) : 0;
   if (tcu) out.push(`🤝 Llevo ${String(Math.round(tcu * 10) / 10).replace(".", ",")} horas de TCU.`);
-  const r = leerJSON("roadmap-hechas"), tareas = r ? Object.values(r).filter(Boolean).length : 0;
+  const r = leerJSON("roadmap-fases-hechas"), tareas = r ? Object.values(r).filter(Boolean).length : 0;
   if (tareas) out.push(`🧭 Completé ${tareas} ${tareas === 1 ? "tarea" : "tareas"} de mi roadmap de pasantía.`);
   const metas = db.metas.filter(m => m.logrado).length;
   if (metas) out.push(`🎯 Ya cumplí ${metas} de mis metas.`);
@@ -203,7 +203,7 @@ function abrirItem(tipo, x) {
     <h2>${b.id ? "Editar" : "Agregar"} ${titulo}</h2>
     <label class="campo">${tipo === "meta" ? "¿Qué quiero lograr?" : tipo === "razon" ? "¿Por qué sigo?" : "Frase"}
       <textarea id="f-texto" rows="3" placeholder="${ejemplo}">${esc(b.texto)}</textarea></label>
-    ${tipo === "meta" ? `<label class="campo">¿Para cuándo? (opcional)<input id="f-cuando" value="${esc(b.cuando || "")}" placeholder="Ej.: Junio 2027, antes de graduarme…"></label>` : ""}
+    ${tipo === "meta" ? `<label class="campo">¿Para cuándo? (opcional)<input id="f-cuando" value="${esc(b.cuando || "")}" placeholder="Ej.: Finales de 2028, antes de graduarme…"></label>` : ""}
     ${botones(!!b.id)}`);
 }
 
